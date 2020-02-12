@@ -1,4 +1,5 @@
 import React, {Component} from "react";
+import Box from "../widgets/Box.jsx";
 
 class Game extends Component {
     
@@ -7,7 +8,8 @@ class Game extends Component {
         this.state = {
             points: 0,
             answer: [[], []],
-            solution: [[], []]
+            solution: [[], []],
+            boxes: []
         }
 
         this.startChallenge();
@@ -18,9 +20,18 @@ class Game extends Component {
         const rows = [];
         rows.push(this.generatePascalTriangle(topRow));
         rows.push(this.generatePascalTriangle(topRow+1));
+
+        const boxes = [];
+
+        rows.forEach((r) => {
+            r.forEach((b) => {
+                boxes.push(b);
+            });
+        });
         
         this.setState({
-            answer: rows
+            answer: rows,
+            boxes
         });
     }
     
@@ -42,9 +53,17 @@ class Game extends Component {
     }
     
     render(){
+        const {points, boxes} = this.state;
         return(
             <div className="game">
-
+                <div className="game__title">Pascal</div>
+                <button className="game__pause">||</button>
+                <div className="game__score">{points}</div>
+                <div className="game__arena">
+                    {boxes.map((b) => {
+                        return <Box value={b} x={0} y={0} />
+                    })}
+                </div>
             </div>
         )
     }
