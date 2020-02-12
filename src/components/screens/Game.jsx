@@ -9,11 +9,15 @@ class Game extends Component {
             points: 0,
             answer: [[], []],
             solution: [[], []],
-            boxes: []
+            boxes: [],
+            arena: null
         }
     }
 
     componentDidMount(){
+        this.setState({
+            arena: document.querySelector(".game__arena")
+        });
         this.startChallenge();
     }
 
@@ -30,6 +34,8 @@ class Game extends Component {
                 boxes.push(b);
             });
         });
+
+        boxes.sort();
         
         this.setState({
             answer: rows,
@@ -55,7 +61,9 @@ class Game extends Component {
     }
     
     render(){
-        const {points, boxes} = this.state;
+        const {points, boxes, arena} = this.state;
+        const firstHalf = Math.floor(boxes.length/2);
+        console.log(arena);
         return(
             <div className="game">
                 <div className="game__title">Pascal</div>
@@ -63,7 +71,15 @@ class Game extends Component {
                 <div className="game__score">{points}</div>
                 <div className="game__arena">
                     {boxes.map((b, i) => {
-                        return <Box value={b} x={0} y={0} id={i} key={i}/>
+                        const offsetX = arena.clientWidth*0.5-(firstHalf+1)*29;
+                        let y = arena.clientHeight - 150;
+                        let x = offsetX+i*58-25;
+                        if(i <= firstHalf){
+                            y += 58;
+                        }else{
+                            x = offsetX+(i%firstHalf)*58;
+                        }
+                        return <Box value={b} x={x} y={y} id={i} key={i}/>
                     })}
                 </div>
             </div>

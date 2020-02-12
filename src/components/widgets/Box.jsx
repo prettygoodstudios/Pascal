@@ -4,11 +4,12 @@ class Box extends Component{
 
     constructor(props){
         super(props);
+        const {x, y, value, id} = props;
         this.state = {
-            x: props.x,
-            y: props.y,
-            value: props.value,
-            id: props.id,
+            x,
+            y,
+            value,
+            id,
             selected: false
         }
     }
