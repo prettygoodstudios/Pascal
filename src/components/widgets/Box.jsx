@@ -37,7 +37,6 @@ class Box extends Component{
 
     render(){
         const {value, x, y, id} = this.state;
-        console.log(x, y);
         return(
             <div className="box" id={"box"+id} style={{top: y+"px", left: x+"px"}}>
                 {value}
