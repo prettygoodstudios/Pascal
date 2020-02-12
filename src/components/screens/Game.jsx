@@ -1,5 +1,6 @@
 import React, {Component} from "react";
 import Box from "../widgets/Box.jsx";
+import Slot from "../widgets/Slot.jsx";
 
 class Game extends Component {
     
@@ -71,13 +72,24 @@ class Game extends Component {
                 <div className="game__score">{points}</div>
                 <div className="game__arena">
                     {boxes.map((b, i) => {
-                        const offsetX = arena.clientWidth*0.5-(firstHalf+1)*29;
-                        let y = arena.clientHeight - 150;
-                        let x = offsetX+i*58-25;
+                        const offsetX = arena.clientWidth*0.5-(firstHalf+1)*27;
+                        let y = 150;
+                        let x = offsetX+i*54-25;
                         if(i <= firstHalf){
-                            y += 58;
+                            y += 54;
                         }else{
-                            x = offsetX+(i%firstHalf)*58;
+                            x = offsetX+(i%firstHalf)*54;
+                        }
+                        return <Slot x={x} y={y} id={i} key={i}/>
+                    })}
+                    {boxes.map((b, i) => {
+                        const offsetX = arena.clientWidth*0.5-(firstHalf+1)*27;
+                        let y = arena.clientHeight - 150;
+                        let x = offsetX+i*54-25;
+                        if(i <= firstHalf){
+                            y += 54;
+                        }else{
+                            x = offsetX+(i%firstHalf)*54;
                         }
                         return <Box value={b} x={x} y={y} id={i} key={i}/>
                     })}

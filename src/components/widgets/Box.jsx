@@ -29,7 +29,7 @@ class Box extends Component{
                 });
             }
         });
-        document.querySelector("#box"+this.state.id).addEventListener("mouseup", (e) => {
+        window.addEventListener("mouseup", (e) => {
             this.setState({
                 selected: false
             });
