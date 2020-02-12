@@ -11,7 +11,9 @@ class Game extends Component {
             solution: [[], []],
             boxes: []
         }
+    }
 
+    componentDidMount(){
         this.startChallenge();
     }
 
@@ -60,8 +62,8 @@ class Game extends Component {
                 <button className="game__pause">||</button>
                 <div className="game__score">{points}</div>
                 <div className="game__arena">
-                    {boxes.map((b) => {
-                        return <Box value={b} x={0} y={0} />
+                    {boxes.map((b, i) => {
+                        return <Box value={b} x={0} y={0} id={i} key={i}/>
                     })}
                 </div>
             </div>
