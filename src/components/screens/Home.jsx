@@ -2,8 +2,8 @@ import React, {Component} from 'react';
 
 
 class Home extends Component {
-    constructor(){
-        super();
+    constructor(props){
+        super(props);
         this.state = {
 
         }
@@ -14,7 +14,7 @@ class Home extends Component {
             <div className="home-screen">
                 <div className="home-screen__title-section">
                     <h1 className="home-screen__title">Pascal</h1>
-                    <button className="home-screen__play-button">Play</button>
+                    <button className="home-screen__play-button" onClick={this.props.startGame}>Play</button>
                 </div>
             </div>
         )
