@@ -4,10 +4,8 @@ class Slot extends Component{
 
     constructor(props){
         super(props);
-        const {x, y, id} = props;
+        const {id} = props;
         this.state = {
-            x,
-            y,
             id,
             selected: false
         }
@@ -18,8 +16,7 @@ class Slot extends Component{
     }
 
     updateSlot = () => {
-        const {boxes} = this.props;
-        const {x, y, id} = this.state;
+        const {boxes, x, y} = this.props;
         let selected = false;
         boxes.forEach((b) => {
             if(b.x > x-20 && b.x+50 < x+70 && b.y > y-20 && b.y+50 < y+70){
@@ -33,7 +30,7 @@ class Slot extends Component{
     }
 
     render(){
-        const {x, y, selected} = this.state;
+        const {x, y} = this.props;
         return(
             <div className="box" style={{top: y+"px", left: x+"px"}}>
                 
