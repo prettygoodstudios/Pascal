@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 
-class Box extends Component{
+class Slot extends Component{
 
     constructor(props){
         super(props);
@@ -8,16 +8,32 @@ class Box extends Component{
         this.state = {
             x,
             y,
-            id
+            id,
+            selected: false
         }
     }
 
     componentDidMount(){
-        
+        window.addEventListener("mouseup", this.updateSlot);
+    }
+
+    updateSlot = () => {
+        const {boxes} = this.props;
+        const {x, y, id} = this.state;
+        let selected = false;
+        boxes.forEach((b) => {
+            if(b.x > x-20 && b.x+50 < x+70 && b.y > y-20 && b.y+50 < y+70){
+                console.log("Selected")
+                selected = true;
+            }
+        });
+        this.setState({
+            selected
+        });
     }
 
     render(){
-        const {x, y, id} = this.state;
+        const {x, y, selected} = this.state;
         return(
             <div className="box" style={{top: y+"px", left: x+"px"}}>
                 
@@ -26,4 +42,4 @@ class Box extends Component{
     }
 }
 
-export default Box;
+export default Slot;
