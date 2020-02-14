@@ -61,6 +61,14 @@ class Game extends Component {
         });
 
         boxes.sort();
+        for (let i = 0; i < boxes.length; i++){
+            const firstBox = Math.floor(Math.random()*boxes.length);
+            const secondBox = Math.floor(Math.random()*boxes.length);
+            const tempBox = boxes[firstBox];
+            boxes[firstBox] = boxes[secondBox];
+            boxes[secondBox] = tempBox;
+        }
+
         
         this.setState({
             answer: rows,
@@ -82,7 +90,7 @@ class Game extends Component {
         return newRow;
     }
     
-    componentWillUnMount(){
+    componentWillUnmount(){
 
     }
 
@@ -128,9 +136,6 @@ class Game extends Component {
                     correct = false;
                 }
             }
-            console.log(correct);
-            console.log(flattenedAnswer);
-            console.log(slots);
             if(!correct){
                 this.setState({
                     boxes,

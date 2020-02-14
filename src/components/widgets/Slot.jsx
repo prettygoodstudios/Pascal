@@ -8,8 +8,8 @@ class Slot extends Component{
     }
 
     componentWillUnmount(){
-        window.removeEventListener("mouseup", this.upHanlder);
-        window.removeEventListener("mousedown", this.downHandler);
+        window.removeEventListener("mouseup", this.updateSlot);
+        window.removeEventListener("mousedown", this.clearSlot);
     }
 
     updateSlot = () => {
@@ -34,9 +34,7 @@ class Slot extends Component{
     render(){
         const {x, y, id} = this.props;
         return(
-            <div className="box" id={"slot"+id} style={{top: y+"px", left: x+"px"}}>
-                
-            </div>
+            <div className="box" id={"slot"+id} style={{top: y+"px", left: x+"px"}}></div>
         )
     }
 }
