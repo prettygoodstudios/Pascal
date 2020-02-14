@@ -3,8 +3,13 @@ import React, {Component} from 'react';
 class Slot extends Component{
 
     componentDidMount(){
-        window.addEventListener("mouseup", this.updateSlot);
-        window.addEventListener("mousedown", this.clearSlot);
+        this.upHanlder = window.addEventListener("mouseup", this.updateSlot);
+        this.downHandler = window.addEventListener("mousedown", this.clearSlot);
+    }
+
+    componentWillUnmount(){
+        window.removeEventListener("mouseup", this.upHanlder);
+        window.removeEventListener("mousedown", this.downHandler);
     }
 
     updateSlot = () => {

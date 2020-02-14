@@ -13,25 +13,37 @@ class Box extends Component{
     }
 
     componentDidMount(){
-        const arena = document.querySelector(".game__arena");
         this.props.setPosition(this.state.id, this.state.x, this.state.y);
-        document.querySelector("#box"+this.state.id).addEventListener("mousedown", (e) => {
-            this.setState({
-                selected: true
-            });
+        this.selectHandler = document.querySelector("#box"+this.state.id).addEventListener("mousedown", this.select);
+        this.moveHandler = window.addEventListener("mousemove", this.handleMouseMove);
+        this.unSelectHandler = window.addEventListener("mouseup", this.unSelect);
+    }
+
+    select = () => {
+        this.setState({
+            selected: true
         });
-        window.addEventListener("mousemove", (e) => {
-            if(this.state.selected){
-                const x = e.clientX - arena.offsetLeft - 25;
-                const y = e.clientY - arena.offsetTop - 25;
-                this.props.setPosition(this.state.id, x, y);
-            }
+    }
+
+    unSelect = () => {
+        this.setState({
+            selected: false
         });
-        window.addEventListener("mouseup", (e) => {
-            this.setState({
-                selected: false
-            });
-        });
+    }
+
+    handleMouseMove = (e) => {
+        if(this.state.selected){
+            const arena = document.querySelector(".game__arena");
+            const x = e.clientX - arena.offsetLeft - 25;
+            const y = e.clientY - arena.offsetTop - 25;
+            this.props.setPosition(this.state.id, x, y);
+        }
+    }
+
+    componentWillUnmount(){
+        document.querySelector("#box"+this.state.id).removeEventListener("mousedown", this.selectHandler);
+        window.removeEventListener("mousemove", this.moveHandler);
+        window.removeEventListener("mouseup", this.unSelectHandler);
     }
 
     render(){
