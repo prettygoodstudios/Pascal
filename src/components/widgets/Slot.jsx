@@ -2,37 +2,34 @@ import React, {Component} from 'react';
 
 class Slot extends Component{
 
-    constructor(props){
-        super(props);
-        const {id} = props;
-        this.state = {
-            id,
-            selected: false
-        }
-    }
-
     componentDidMount(){
         window.addEventListener("mouseup", this.updateSlot);
+        window.addEventListener("mousedown", this.clearSlot);
     }
 
     updateSlot = () => {
-        const {boxes, x, y} = this.props;
-        let selected = false;
-        boxes.forEach((b) => {
+        const {boxes, x, y, snapBox, id} = this.props;
+        boxes.forEach((b, i) => {
             if(b.x > x-20 && b.x+50 < x+70 && b.y > y-20 && b.y+50 < y+70){
-                console.log("Selected")
-                selected = true;
+                snapBox(i, id);
             }
-        });
-        this.setState({
-            selected
         });
     }
 
+    clearSlot = (e) => {
+        const {id, unSelectSlot} = this.props;
+        const element = document.getElementById("slot"+id);
+        const rect = element.getBoundingClientRect();
+        if(e.clientX > rect.left && e.clientX < rect.right && e.clientY > rect.top && e.clientY < rect.bottom){
+            unSelectSlot(id);
+        }
+    }
+
+
     render(){
-        const {x, y} = this.props;
+        const {x, y, id} = this.props;
         return(
-            <div className="box" style={{top: y+"px", left: x+"px"}}>
+            <div className="box" id={"slot"+id} style={{top: y+"px", left: x+"px"}}>
                 
             </div>
         )

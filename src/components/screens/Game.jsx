@@ -9,7 +9,6 @@ class Game extends Component {
         this.state = {
             points: 0,
             answer: [[], []],
-            solution: [[], []],
             boxes: [],
             slots: [],
             arena: null
@@ -38,13 +37,13 @@ class Game extends Component {
             r.forEach((b) => {
                 const offsetX = arena.clientWidth*0.5-(firstHalf+1)*27;
                 let y = arena.clientHeight - 150;
-                let slotY= 150;
+                let slotY = 150;
                 let x = offsetX+index*54-25;
                 if(index <= firstHalf){
                     y += 54;
                     slotY += 54;
                 }else{
-                    x = offsetX+(index%firstHalf)*54;
+                    x = offsetX+(index-firstHalf-1)*54;
                 }
                 boxes.push({
                     value: b,
@@ -54,7 +53,8 @@ class Game extends Component {
                 slots.push({
                     value: -1,
                     x,
-                    y: slotY
+                    y: slotY,
+                    boxId: -1
                 })
                 index++;
             });
@@ -96,18 +96,50 @@ class Game extends Component {
         });
     }
 
-    snapBox = (boxId, slotId) => {
-        const {boxes, slots} = this.state;
-        const box = boxes[boxId];
-        const slot = slots[slotId];
-        box = {
-            ...box,
-            x: slot.x,
-            y: slot.y
+    unSelectSlot = (id) => {
+        const {slots} = this.state;
+        slots[id] = {
+            ...slots[id],
+            value: -1,
+            boxId: -1
         }
-        this.setState({
-           boxes
-        });
+    }    
+
+    snapBox = (boxId, slotId) => {
+        const {boxes, slots, answer, arena} = this.state;
+        let box = boxes[boxId];
+        const slot = slots[slotId];
+        if(slot.value == -1){
+            box = {
+                ...box,
+                x: slot.x,
+                y: slot.y
+            }
+            boxes[boxId] = box;
+            slots[slotId] = {
+                ...slot,
+                value: box.value,
+                boxId
+            }
+            const flattenedAnswer = [...answer[1], ...answer[0]];
+            let correct = true;
+            for(let i = 0; i < slots.length; i++){
+                if(slots[i].value != flattenedAnswer[i]){
+                    correct = false;
+                }
+            }
+            console.log(correct);
+            console.log(flattenedAnswer);
+            console.log(slots);
+            if(!correct){
+                this.setState({
+                    boxes,
+                    slots
+                });
+            }else{
+                this.startChallenge(arena);
+            }
+        }
     }
     
     render(){
@@ -120,7 +152,7 @@ class Game extends Component {
                 <div className="game__arena">
                     {slots.map((s, i) => {
                         const {x, y} = s;
-                        return <Slot x={x} y={y} id={i} key={i} boxes={boxes}/>
+                        return <Slot x={x} y={y} id={i} key={i} boxes={boxes} snapBox={this.snapBox} unSelectSlot={this.unSelectSlot}/>
                     })}
                     {boxes.map((b, i) => {
                         const {x, y, value} = b;
