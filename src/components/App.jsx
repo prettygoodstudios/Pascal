@@ -2,7 +2,10 @@ import React, {Component} from 'react';
 
 import Home from "./screens/Home.jsx";
 import Game from "./screens/Game.jsx";
-import {HOME_STATE, GAME_STATE} from "../constants/gameStates";
+import EndGameMenu from "./screens/EndGameMenu.jsx";
+import PauseGameMenu from "./screens/PauseGameMenu.jsx";
+
+import {HOME_STATE, GAME_STATE, END_GAME, PAUSE_GAME} from "../constants/gameStates";
 
 class App extends Component{
 
@@ -10,7 +13,8 @@ class App extends Component{
         super();
 
         this.state = {
-            gameState: HOME_STATE
+            gameState: HOME_STATE,
+            points: 0
         }
     }
 
@@ -24,12 +28,34 @@ class App extends Component{
         });
     }
 
+    endGame = (points) => {
+        this.setState({
+            gameState: END_GAME,
+            points
+        });
+    }
+
+    goHome = () => {
+        this.setState({
+            gameState: HOME_STATE
+        });
+    }
+
+    pauseGame = (points) => {
+        this.setState({
+            gameState: PAUSE_GAME,
+            points
+        });
+    }
+
     render(){
-        const {gameState} = this.state;
+        const {gameState, points} = this.state;
         return(
             <div>
                 {gameState == HOME_STATE && <Home startGame={this.startGame}/>}
-                {gameState == GAME_STATE && <Game />}
+                {gameState == PAUSE_GAME && <PauseGameMenu startGame={this.startGame} goHome={this.goHome} points={points}/>}
+                {(gameState == GAME_STATE || gameState == PAUSE_GAME) && <Game endGame={this.endGame} gameState={gameState} pauseGame={this.pauseGame}/>}
+                {gameState == END_GAME && <EndGameMenu startGame={this.startGame} goHome={this.goHome} points={points}/>}
             </div>
         )
     }

@@ -1,6 +1,7 @@
 import React, {Component} from "react";
 import Box from "../widgets/Box.jsx";
 import Slot from "../widgets/Slot.jsx";
+import { PAUSE_GAME } from "../../constants/gameStates.js";
 
 class Game extends Component {
     
@@ -11,7 +12,8 @@ class Game extends Component {
             answer: [[], []],
             boxes: [],
             slots: [],
-            arena: null
+            arena: null,
+            time: 30
         }
     }
 
@@ -66,15 +68,31 @@ class Game extends Component {
             const secondBox = Math.floor(Math.random()*boxes.length);
             const tempBox = boxes[firstBox];
             boxes[firstBox] = boxes[secondBox];
-            boxes[secondBox] = tempBox;
+            boxes[secondBox] = tempBox;``
         }
 
         
         this.setState({
             answer: rows,
             boxes,
-            slots
+            slots,
+            time: 30
         });
+        window.clearInterval(this.timer);
+        this.timer = window.setInterval(this.updateTime, 1000);
+    }
+
+    updateTime = () => {
+        const {time, points} = this.state;
+        if(this.props.gameState != PAUSE_GAME){
+            if(time-1 == 0){
+                this.props.endGame(points);
+            }else{
+                this.setState({
+                    time: time-1
+                });
+            }
+        }
     }
     
     generatePascalTriangle(n){
@@ -91,7 +109,7 @@ class Game extends Component {
     }
     
     componentWillUnmount(){
-
+        window.clearInterval(this.timer);
     }
 
     setBoxPosition = (id, x, y) => {
@@ -111,10 +129,18 @@ class Game extends Component {
             value: -1,
             boxId: -1
         }
-    }    
+    }
+    
+    startNewRound = () => {
+        const {boxes, arena, time, points} = this.state;
+        this.setState({
+            points: points+boxes.length*50+time*50
+        });
+        this.startChallenge(arena);
+    }
 
     snapBox = (boxId, slotId) => {
-        const {boxes, slots, answer, arena} = this.state;
+        const {boxes, slots, answer} = this.state;
         let box = boxes[boxId];
         const slot = slots[slotId];
         if(slot.value == -1){
@@ -142,18 +168,21 @@ class Game extends Component {
                     slots
                 });
             }else{
-                this.startChallenge(arena);
+                this.startNewRound();
             }
         }
     }
     
     render(){
-        const {points, boxes, slots} = this.state;
+        const {points, boxes, slots, time} = this.state;
+        const {pauseGame, gameState} = this.props;
+
         return(
-            <div className="game">
+            <div className="game" style={{display: gameState == PAUSE_GAME ? "none" : "grid"}}>
                 <div className="game__title">Pascal</div>
-                <button className="game__pause">||</button>
-                <div className="game__score">{points}</div>
+                <button className="game__pause" onClick={() => pauseGame(points)}>||</button>
+                <div className="game__time">{time}</div>
+                <div className="game__score">Points: {points}</div>
                 <div className="game__arena">
                     {slots.map((s, i) => {
                         const {x, y} = s;
