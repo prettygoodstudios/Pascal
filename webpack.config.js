@@ -30,6 +30,12 @@ module.exports = {
                 plugins: ['@babel/plugin-proposal-class-properties', '@babel/plugin-transform-react-jsx']
               }
             }
+          },
+          {
+            test: /\.(ttf|otf)$/,
+            use: [
+              'file-loader',
+            ],
           }
       ]
   }

@@ -46,11 +46,11 @@ class Box extends Component{
     }
 
     render(){
-        const {x, y, value, id} = this.props;
+        const {x, y, id, visibleValue} = this.props;
 
         return(
             <div className="box" id={"box"+id} style={{top: y+"px", left: x+"px"}}>
-                {value}
+                {visibleValue}
             </div>
         )
     }
