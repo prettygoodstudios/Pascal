@@ -1,7 +1,9 @@
 @import "variables";
+@import "widgets";
 @import "home";
 @import "game";
 @import "game-menu";
+@import "help-screen";
 
 html, body {
     background-color: $dark-color;

@@ -10,12 +10,14 @@ class Home extends Component {
     }
 
     render(){
+        const {startGame, openHelp} = this.props;
         return(
             <div className="home-screen">
                 <div className="home-screen__title-section">
                     <h1 className="home-screen__title">Pascal</h1>
-                    <button className="home-screen__play-button" onClick={this.props.startGame}>Play</button>
+                    <button className="home-screen__play-button" onClick={startGame}>Play</button>
                 </div>
+                <button className="home-screen__help-button" onClick={openHelp}>?</button>
             </div>
         )
     }

@@ -36,5 +36,22 @@
             cursor: pointer;
         }
     }
+
+    &__help-button{
+        grid-row: 1;
+        grid-column: 3;
+        background-color: $light-color;
+        border-width: 4px;
+        border-color: $light-color;
+        $color: $dark-color;
+        font-size: 2em;
+        border-style: solid;
+
+        &:hover{
+            background-color: $dark-color;
+            color: $light-color;
+            cursor: pointer;
+        }
+    }
     
 }

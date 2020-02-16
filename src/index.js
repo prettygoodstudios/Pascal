@@ -8,4 +8,4 @@ import App from "./components/App.jsx";
 
 const appWrapper = document.getElementById("appWrapper");
 
-render(<App />, appWrapper);
+render(<App />, appWrapper); 
