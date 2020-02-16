@@ -10,6 +10,13 @@
         text-align: center;
     }
 
+    @media only screen and (max-height: 700px){
+        p{
+            max-height: calc(100vh - 250px);
+            overflow-y: scroll;
+        }
+    }
+
     @media only screen and (max-width: 520px){
         p{
             padding: 0px 20px;
