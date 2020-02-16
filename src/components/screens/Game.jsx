@@ -28,7 +28,7 @@ class Game extends Component {
 
     startChallenge = (arena) => {
         const {round} = this.state;
-        const topRow = Math.floor(Math.random()*6)+1;
+        const topRow = Math.floor(Math.random()*6)+2;
         const rows = [];
         rows.push(this.generatePascalTriangle(topRow));
         rows.push(this.generatePascalTriangle(topRow+1));
@@ -38,7 +38,16 @@ class Game extends Component {
         let index = 0;
         const firstHalf = Math.floor((rows[0].length+rows[1].length)/2);
         const flattenedBoxes = [...rows[0], ...rows[1]]
-        const mysteryBox = flattenedBoxes[Math.floor(Math.random()*flattenedBoxes.length)];
+        const mysteryBoxes = [];
+        mysteryBoxes.push(flattenedBoxes[Math.floor(Math.random()*flattenedBoxes.length)]);
+        mysteryBoxes.push(flattenedBoxes[Math.floor(Math.random()*flattenedBoxes.length)]);
+
+        while(mysteryBoxes[0] == mysteryBoxes[1]){
+            mysteryBoxes[1] = flattenedBoxes[Math.floor(Math.random()*flattenedBoxes.length)];
+        }
+
+        mysteryBoxes.sort();
+
         rows.forEach((r) => {
             r.forEach((b) => {
                 const offsetX = arena.clientWidth*0.5-(firstHalf+1)*27;
@@ -52,8 +61,18 @@ class Game extends Component {
                     x = offsetX+(index-firstHalf-1)*54;
                 }
                 let visibleValue = b;
-                if(round > 3 && mysteryBox == b){
+                if(round > 3 && round < 5 &&  mysteryBoxes[0] == b){
                     visibleValue = "?";
+                }
+
+                const mysteryBoxIndex = mysteryBoxes.indexOf(b);
+
+                if(round > 4 && mysteryBoxIndex != -1){
+                    if(mysteryBoxIndex == 0){
+                        visibleValue = "a";
+                    }else{
+                        visibleValue = "b";
+                    }
                 }
                 boxes.push({
                     value: b,
