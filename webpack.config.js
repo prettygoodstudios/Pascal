@@ -35,9 +35,9 @@ module.exports = {
             test: /\.(ttf|otf)$/,
             loader: 'file-loader',
             options: {
-                name: '[path][name].[ext]'
+                name: '/fonts/[name].[ext]'
             }
-          }
+        },
       ]
   }
 };
