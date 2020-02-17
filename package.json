@@ -5,7 +5,8 @@
   "main": "webpack.config.js",
   "scripts": {
     "start": "webpack-dev-server --config webpack.config.js --port 8080",
-    "build": "rm -rf dist/* && webpack --config webpack.config.js"
+    "build": "rm -rf dist/* && webpack --config webpack.config.js",
+    "deploy": "scp dist/main.js $SERVER:Pascal/dist"
   },
   "author": "",
   "license": "ISC",
