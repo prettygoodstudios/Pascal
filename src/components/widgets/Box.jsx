@@ -1,5 +1,7 @@
 import React, {Component} from 'react';
 
+import {getPointerPosition} from '../../helpers/input'; 
+
 class Box extends Component{
 
     constructor(props){
@@ -15,6 +17,9 @@ class Box extends Component{
         this.selectHandler = document.querySelector("#box"+id).addEventListener("mousedown", this.select);
         this.moveHandler = window.addEventListener("mousemove", this.handleMouseMove);
         this.unSelectHandler = window.addEventListener("mouseup", this.unSelect);
+        this.dragHandler = window.addEventListener("touchmove", this.handleMouseMove);
+        this.touchStartHandler = document.querySelector("#box"+id).addEventListener("touchstart", this.select);
+        this.touchEndHandler = window.addEventListener("touchend", this.unSelect);
     }
 
     select = () => {
@@ -31,10 +36,11 @@ class Box extends Component{
 
     handleMouseMove = (e) => {
         const {id} = this.props;
+        const {clientX, clientY} = getPointerPosition(e);
         if(this.state.selected){
             const arena = document.querySelector(".game__arena");
-            const x = e.clientX - arena.offsetLeft - 25;
-            const y = e.clientY - arena.offsetTop - 25;
+            const x = clientX - arena.offsetLeft - 25;
+            const y = clientY - arena.offsetTop - 25;
             this.props.setPosition(id, x, y);
         }
     }
@@ -43,6 +49,9 @@ class Box extends Component{
         document.querySelector("#box"+this.props.id).removeEventListener("mousedown", this.select);
         window.removeEventListener("mousemove", this.handleMouseMove);
         window.removeEventListener("mouseup", this.unSelect);
+        window.removeEventListener("touchmove", this.handleMouseMove);
+        window.removeEventListener("touchend", this.unSelect);
+        document.querySelector("#box"+this.props.id).removeEventListener("touchstart", this.select);
     }
 
     render(){
