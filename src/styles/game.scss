@@ -68,6 +68,17 @@
         position: relative;
         grid-column: 2;
     }
+
+    @media only screen and (max-width: $mobile-break-point){
+        grid-template-columns: 50px 1fr 50px;
+        grid-template-rows: 50px calc(100vh - 50px);
+        &__pause{
+            span{
+                height: 30px;
+                margin: 0px 5px;
+            }
+        }
+    }
 }
 
 .box{

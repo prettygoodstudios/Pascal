@@ -2,6 +2,7 @@ import React, {Component} from "react";
 import Box from "../widgets/Box.jsx";
 import Slot from "../widgets/Slot.jsx";
 import { PAUSE_GAME } from "../../constants/gameStates.js";
+import { MOBILE_BREAK_POINT } from "../../constants/breakPoints.js";
 
 class Game extends Component {
     
@@ -54,6 +55,12 @@ class Game extends Component {
                 let y = arena.clientHeight - 150;
                 let slotY = 150;
                 let x = offsetX+index*54-25;
+
+                if(window.innerHeight <= MOBILE_BREAK_POINT){
+                    y = arena.clientHeight - 100;
+                    slotY = 20;
+                }
+
                 if(index <= firstHalf){
                     y += 54;
                     slotY += 54;
