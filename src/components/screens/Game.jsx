@@ -2,7 +2,7 @@ import React, {Component} from "react";
 import Box from "../widgets/Box.jsx";
 import Slot from "../widgets/Slot.jsx";
 import { PAUSE_GAME } from "../../constants/gameStates.js";
-import { MOBILE_BREAK_POINT } from "../../constants/breakPoints.js";
+import { MOBILE_BREAK_POINT, LEGACY_MOBILE_BREAK_POINT } from "../../constants/breakPoints.js";
 
 class Game extends Component {
     
@@ -59,6 +59,10 @@ class Game extends Component {
                 if(window.innerHeight <= MOBILE_BREAK_POINT){
                     y = arena.clientHeight - 100;
                     slotY = 20;
+                }
+
+                if(window.innerHeight <= LEGACY_MOBILE_BREAK_POINT){
+                    y += 20;
                 }
 
                 if(index <= firstHalf){
