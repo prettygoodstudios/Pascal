@@ -47,7 +47,7 @@ class Game extends Component {
             mysteryBoxes[1] = flattenedBoxes[Math.floor(Math.random()*flattenedBoxes.length)];
         }
 
-        mysteryBoxes.sort();
+        mysteryBoxes.sort((a, b) => a-b);
 
         rows.forEach((r) => {
             r.forEach((b) => {
@@ -107,7 +107,7 @@ class Game extends Component {
             const secondBox = Math.floor(Math.random()*boxes.length);
             const tempBox = boxes[firstBox];
             boxes[firstBox] = boxes[secondBox];
-            boxes[secondBox] = tempBox;``
+            boxes[secondBox] = tempBox;
         }
 
         
