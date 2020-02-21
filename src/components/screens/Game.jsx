@@ -52,21 +52,14 @@ class Game extends Component {
         rows.forEach((r) => {
             r.forEach((b) => {
                 const offsetX = arena.clientWidth*0.5-(firstHalf+1)*27;
-                let y = arena.clientHeight - 150;
                 let slotY = 150;
                 let x = offsetX+index*54-25;
 
                 if(window.innerHeight <= MOBILE_BREAK_POINT){
-                    y = arena.clientHeight - 100;
                     slotY = 20;
                 }
 
-                if(window.innerHeight <= LEGACY_MOBILE_BREAK_POINT){
-                    y += 20;
-                }
-
                 if(index <= firstHalf){
-                    y += 54;
                     slotY += 54;
                 }else{
                     x = offsetX+(index-firstHalf-1)*54;
@@ -87,8 +80,8 @@ class Game extends Component {
                 }
                 boxes.push({
                     value: b,
-                    x,
-                    y,
+                    x: 0,
+                    y: 0,
                     visibleValue
                 });
                 slots.push({
@@ -101,19 +94,44 @@ class Game extends Component {
             });
         });
 
-        boxes.sort();
-        for (let i = 0; i < boxes.length; i++){
-            const firstBox = Math.floor(Math.random()*boxes.length);
-            const secondBox = Math.floor(Math.random()*boxes.length);
-            const tempBox = boxes[firstBox];
-            boxes[firstBox] = boxes[secondBox];
-            boxes[secondBox] = tempBox;
+        const newBoxes = [];
+        while(boxes.length != 0){
+            let index = Math.floor(Math.random()*boxes.length);
+            newBoxes.push(boxes[index]);
+            boxes.splice(index, 1);
         }
 
+        newBoxes.forEach((b, i) => {
+            const offsetX = arena.clientWidth*0.5-(firstHalf+1)*27;
+                let y = arena.clientHeight - 150;
+                let x = offsetX+i*54-25;
+
+                if(window.innerHeight <= MOBILE_BREAK_POINT){
+                    y = arena.clientHeight - 100;
+                }
+
+                if(window.innerHeight <= LEGACY_MOBILE_BREAK_POINT){
+                    y += 20;
+                }
+
+                if(i <= firstHalf){
+                    y += 54;
+                }else{
+                    x = offsetX+(i-firstHalf-1)*54;
+                }
+
+                newBoxes[i] = {
+                    ...b,
+                    x,
+                    y
+                }
+        });
+
+        console.log(newBoxes);
         
         this.setState({
             answer: rows,
-            boxes,
+            boxes: newBoxes,
             slots,
             time: 30
         });
