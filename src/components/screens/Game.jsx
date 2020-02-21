@@ -126,8 +126,6 @@ class Game extends Component {
                     y
                 }
         });
-
-        console.log(newBoxes);
         
         this.setState({
             answer: rows,
