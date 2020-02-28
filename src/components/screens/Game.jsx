@@ -15,7 +15,8 @@ class Game extends Component {
             slots: [],
             arena: null,
             time: 30,
-            round: 0
+            round: 0,
+            rounds: []
         }
     }
 
@@ -28,8 +29,14 @@ class Game extends Component {
     }
 
     startChallenge = (arena) => {
-        const {round} = this.state;
-        const topRow = Math.floor(Math.random()*6)+2;
+        const {round, rounds} = this.state;
+        let topRow = Math.floor(Math.random()*8)+2;
+        let tries = 0;
+        while(rounds.indexOf(topRow) != -1 && tries < 9){
+            topRow = Math.floor(Math.random()*8)+2;
+            tries++;
+        }
+        rounds.push(topRow);
         const rows = [];
         rows.push(this.generatePascalTriangle(topRow));
         rows.push(this.generatePascalTriangle(topRow+1));
@@ -126,12 +133,12 @@ class Game extends Component {
                     y
                 }
         });
-        
         this.setState({
             answer: rows,
             boxes: newBoxes,
             slots,
-            time: 30
+            time: 30,
+            rounds
         });
         window.clearInterval(this.timer);
         this.timer = window.setInterval(this.updateTime, 1000);

@@ -58,7 +58,7 @@ class Box extends Component{
         const {x, y, id, visibleValue} = this.props;
 
         return(
-            <div className="box" id={"box"+id} style={{top: y+"px", left: x+"px"}}>
+            <div className="box" id={"box"+id} style={{top: y+"px", left: x+"px", cursor: "pointer"}}>
                 {visibleValue}
             </div>
         )
