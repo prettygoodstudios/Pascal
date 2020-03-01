@@ -59,7 +59,7 @@ class Game extends Component {
         rows.forEach((r) => {
             r.forEach((b) => {
                 const offsetX = arena.clientWidth*0.5-(firstHalf+1)*27;
-                let slotY = 150;
+                let slotY = window.innerHeight*0.5-150;
                 let x = offsetX+index*54-25;
 
                 if(window.innerHeight <= MOBILE_BREAK_POINT){
@@ -110,28 +110,28 @@ class Game extends Component {
 
         newBoxes.forEach((b, i) => {
             const offsetX = arena.clientWidth*0.5-(firstHalf+1)*27;
-                let y = arena.clientHeight - 150;
-                let x = offsetX+i*54-25;
+            let y = arena.clientHeight*0.5+50;
+            let x = offsetX+i*54-25;
 
-                if(window.innerHeight <= MOBILE_BREAK_POINT){
-                    y = arena.clientHeight - 100;
-                }
+            if(window.innerHeight <= MOBILE_BREAK_POINT){
+                y = arena.clientHeight - 100;
+            }
 
-                if(window.innerHeight <= LEGACY_MOBILE_BREAK_POINT){
-                    y += 20;
-                }
+            if(window.innerHeight <= LEGACY_MOBILE_BREAK_POINT){
+                y += 20;
+            }
 
-                if(i <= firstHalf){
-                    y += 54;
-                }else{
-                    x = offsetX+(i-firstHalf-1)*54;
-                }
+            if(i <= firstHalf){
+                y += 54;
+            }else{
+                x = offsetX+(i-firstHalf-1)*54;
+            }
 
-                newBoxes[i] = {
-                    ...b,
-                    x,
-                    y
-                }
+            newBoxes[i] = {
+                ...b,
+                x,
+                y
+            }
         });
         this.setState({
             answer: rows,
