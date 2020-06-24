@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 
+import PWAPrompt from "../widgets/PWAPrompt.jsx";
 
 class Home extends Component {
     constructor(props){
@@ -7,6 +8,10 @@ class Home extends Component {
         this.state = {
 
         }
+    }
+
+    componentDidMount(){
+        this.props.lockScroll();
     }
 
     render(){
@@ -18,6 +23,7 @@ class Home extends Component {
                     <button className="home-screen__play-button" onClick={startGame}>Play</button>
                 </div>
                 <button className="home-screen__help-button" onClick={openHelp}>?</button>
+                <PWAPrompt />
             </div>
         )
     }

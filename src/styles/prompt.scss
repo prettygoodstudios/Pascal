@@ -1,0 +1,68 @@
+.prompt{
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    margin: 0;
+    font-family: $font;
+    background-color: $light-color;
+    color: $dark-color;
+    padding: 10px;
+    border-radius: 4px;
+    transform: translate(0, calc(-50% + 5px));
+
+    a{
+        @include menu-button;
+        font-size: 0.8em;
+        background-color: $dark-color;
+        color: $light-color;
+        display: inline-flex;
+        width: auto;
+        padding: 0px 40px;
+        border-radius: 50px;
+
+        &:hover{
+            background-color: $light-color;
+            color: $dark-color;
+            border-color: $dark-color;
+            cursor: pointer;
+        }
+
+        &:focus{
+            outline: none;
+        }
+    }
+
+    &__header{
+        display: flex;
+        justify-content: flex-end;
+        &__dismiss{
+            width: 20px;
+            height: 20px;
+            position: relative;
+            div{
+                position: absolute;
+                left: 50%;
+                top: 50%;
+                width: 20px;
+                height: 4px;
+                border-radius: 2px;
+                background-color: $dark-color;
+            }
+
+            &:hover{
+                outline: none;
+                background-color: transparent;
+                opacity: 0.8em;
+                cursor: pointer;
+            }
+
+            div:nth-child(1){
+                transform: translate(-50%, -50%) rotate(-45deg);
+            }
+
+            div:nth-child(2){
+                transform: translate(-50%, -50%) rotate(45deg) ;
+            }
+        }
+    }
+}

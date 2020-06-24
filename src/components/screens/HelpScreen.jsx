@@ -3,6 +3,10 @@ import React, {Component} from "react";
 
 class HelpScreen extends Component {
 
+    componentDidMount(){
+        this.props.unlockScroll();
+    }
+
     render(){
         const {goHome} = this.props;
         return(

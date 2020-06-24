@@ -20,7 +20,7 @@ class App extends Component{
     }
 
     componentDidMount(){
-        document.body.addEventListener('touchmove', (e) =>  e.preventDefault(), { passive: false });
+        
     }
 
     startGame = () => {
@@ -55,15 +55,27 @@ class App extends Component{
         });
     }
 
+    scrollListener = (e) => {
+        e.preventDefault();
+    }
+
+    lockScroll = () => {
+        document.body.addEventListener('touchmove', this.scrollListener, { passive: false });
+    }
+
+    unlockScroll = () => {
+        document.body.removeEventListener("touchmove", this.scrollListener, {passive: true});
+    }
+
     render(){
         const {gameState, points} = this.state;
         return(
             <div>
-                {gameState == HOME_STATE && <Home startGame={this.startGame} openHelp={this.openHelp}/>}
+                {gameState == HOME_STATE && <Home startGame={this.startGame} openHelp={this.openHelp} lockScroll={this.lockScroll}/>}
                 {gameState == PAUSE_GAME && <PauseGameMenu startGame={this.startGame} goHome={this.goHome} points={points}/>}
                 {(gameState == GAME_STATE || gameState == PAUSE_GAME) && <Game endGame={this.endGame} gameState={gameState} pauseGame={this.pauseGame}/>}
                 {gameState == END_GAME && <EndGameMenu startGame={this.startGame} goHome={this.goHome} points={points}/>}
-                {gameState == HELP_SCREEN && <HelpScreen goHome={this.goHome}/>}
+                {gameState == HELP_SCREEN && <HelpScreen goHome={this.goHome} unlockScroll={this.unlockScroll}/>}
             </div>
         )
     }
