@@ -35,6 +35,10 @@
             color: $light-color;
             cursor: pointer;
         }
+
+        &:focus{
+            outline: none;
+        }
     }
 
     &__help-button{
@@ -52,6 +56,10 @@
             background-color: $dark-color;
             color: $light-color;
             cursor: pointer;
+        }
+
+        &:focus{
+            outline: none;
         }
     }
 

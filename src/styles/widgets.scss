@@ -19,4 +19,8 @@
         color: $light-color;
         cursor: pointer;
     }
+
+    &:focus{
+        outline: none;
+    }
 }
