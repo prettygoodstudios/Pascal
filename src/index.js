@@ -9,3 +9,15 @@ import App from "./components/App.jsx";
 const appWrapper = document.getElementById("appWrapper");
 
 render(<App />, appWrapper); 
+
+if('serviceWorker' in navigator){
+    window.addEventListener("load", (e) => {
+        navigator.serviceWorker.
+            register('../serviceworkers/cache.js')
+            .then((register) => {
+                console.log("Registered")
+            }).catch((error) => {
+                console.log("error");
+            });
+    });
+}

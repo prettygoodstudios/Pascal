@@ -6,7 +6,7 @@ export default class PWAPrompt extends Component {
     constructor(props){
         super(props);
         this.state = {
-            show: true,
+            show: false,
             deferredPrompt: null
         }
     }
@@ -29,7 +29,7 @@ export default class PWAPrompt extends Component {
         return(
             <Prompt show={this.state.show} dismiss={() => this.setState({show: false})}>
                 <h3>Install Now</h3>
-                <a>Download</a>
+                <a className="">Download</a>
             </Prompt>
         )
     }
