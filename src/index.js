@@ -13,7 +13,7 @@ render(<App />, appWrapper);
 if('serviceWorker' in navigator){
     window.addEventListener("load", (e) => {
         navigator.serviceWorker.
-            register('../serviceworkers/cache.js')
+            register('../serviceworker.js')
             .then((register) => {
                 console.log("Registered")
             }).catch((error) => {

@@ -10,6 +10,7 @@ export default class Prompt extends Component {
 
     render(){
         const {show, children, dismiss} = this.props;
+        console.log(show);
         if(!show){
             return <div></div>;
         }
