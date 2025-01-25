@@ -5,7 +5,6 @@ module.exports = {
   output: {
     path: path.resolve(__dirname, 'dist'),
     filename: 'main.js',
-    publicPath: 'dist'
   },
   module: {
       rules: [
@@ -27,17 +26,21 @@ module.exports = {
               loader: 'babel-loader',
               options: {
                 presets: ['@babel/preset-env', '@babel/preset-react'],
-                plugins: ['@babel/plugin-proposal-class-properties', '@babel/plugin-transform-react-jsx']
+                plugins: ['@babel/plugin-transform-react-jsx']
               }
             }
           },
           {
             test: /\.(ttf|otf)$/,
-            loader: 'file-loader',
-            options: {
-                name: '/fonts/[name].[ext]'
-            }
+            type: 'asset/resource'
         },
       ]
-  }
+  },
+  devServer: {
+    static: {
+      directory: path.join(__dirname, '/'),
+    },
+    compress: true,
+    port: 9000,
+  },
 };

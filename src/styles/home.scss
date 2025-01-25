@@ -1,3 +1,5 @@
+@use './variables.scss';
+
 .home-screen{
     display: grid;
     grid-template-columns: 100px 1fr 100px;
@@ -13,26 +15,26 @@
     }
 
     &__title{
-        color: $light-color;
-        font-family: $font;
+        color: variables.$light-color;
+        font-family: variables.$font;
         font-size: 4em;
     }
 
     &__play-button{
         font-size: 2em;
-        background-color: $light-color;
-        color: $dark-color;
+        background-color: variables.$light-color;
+        color: variables.$dark-color;
         border-width: 4px;
-        border-color: $light-color;
+        border-color: variables.$light-color;
         border-radius: 50px;
         border-style: solid;
         padding: 15px;
         width: 200px;
 
         &:hover{
-            border-color: $light-color;
-            background-color: $dark-color;
-            color: $light-color;
+            border-color: variables.$light-color;
+            background-color: variables.$dark-color;
+            color: variables.$light-color;
             cursor: pointer;
         }
 
@@ -44,17 +46,17 @@
     &__help-button{
         grid-row: 1;
         grid-column: 3;
-        background-color: $light-color;
+        background-color: variables.$light-color;
         border-width: 4px;
-        border-color: $light-color;
-        $color: $dark-color;
+        border-color: variables.$light-color;
+        color: variables.$dark-color;
         font-size: 2em;
         border-style: solid;
         padding: 0px;
 
         &:hover{
-            background-color: $dark-color;
-            color: $light-color;
+            background-color: variables.$dark-color;
+            color: variables.$light-color;
             cursor: pointer;
         }
 
@@ -63,7 +65,7 @@
         }
     }
 
-    @media only screen and (max-height: $mobile-break-point){
+    @media only screen and (max-height: variables.$mobile-break-point){
         grid-template-columns: 50px 1fr 50px;
         grid-template-rows: 50px calc(100vh - 50px);
         &__title{

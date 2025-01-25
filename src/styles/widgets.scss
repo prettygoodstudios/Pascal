@@ -1,3 +1,5 @@
+@use './variables.scss';
+
 @mixin menu-button {
     border-radius: 25px;
     font-size: 1.5em;
@@ -5,9 +7,9 @@
     width: 300px;
     height: 50px;
     margin: 20px 0px;
-    background-color: $light-color;
-    color: $dark-color;
-    border-color: $light-color;
+    background-color: variables.$light-color;
+    color: variables.$dark-color;
+    border-color: variables.$light-color;
     border-style: solid;
     border-width: 4px;
     display: flex;
@@ -15,8 +17,8 @@
     align-items: center;
 
     &:hover{
-        background-color: $dark-color;
-        color: $light-color;
+        background-color: variables.$dark-color;
+        color: variables.$light-color;
         cursor: pointer;
     }
 

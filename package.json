@@ -4,28 +4,29 @@
   "description": "",
   "main": "webpack.config.js",
   "scripts": {
-    "start": "webpack-dev-server --config webpack.config.js --port 8080",
-    "build": "rm -rf dist/* && webpack --config webpack.config.js",
-    "deploy": "scp dist/main.js $SERVER:Pascal/dist"
+    "start": "webpack-dev-server --config webpack.config.js --port 8080 --mode development",
+    "build": "rm -rf dist/* && webpack --config webpack.config.js --mode development",
+    "deploy": "scp dist/main.js $SERVER:Pascal/dist",
+    "clean": "rm package-lock.json && rm -rf node_modules && npm i"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@babel/core": "^7.8.4",
-    "@babel/plugin-proposal-class-properties": "^7.8.3",
-    "@babel/plugin-transform-react-jsx": "^7.8.3",
-    "@babel/preset-env": "^7.8.4",
-    "@babel/preset-react": "^7.8.3",
-    "babel-loader": "^8.0.6",
-    "css-loader": "^3.4.2",
-    "file-loader": "^5.0.2",
-    "node-sass": "^4.14.1",
     "react": "^16.12.0",
-    "react-dom": "^16.12.0",
+    "react-dom": "^16.12.0"
+  },
+  "devDependencies": {
+    "webpack": "^5.0.0",
+    "webpack-cli": "^5.0.0",
+    "webpack-dev-server": "^5.0.0",
+    "@babel/core": "^7.8.4",
+    "@babel/plugin-transform-react-jsx": "^7.25.9",
+    "@babel/preset-env": "^7.26",
+    "@babel/preset-react": "^7.26",
+    "babel-loader": "^8.0.6",
     "sass-loader": "^8.0.2",
-    "style-loader": "^1.1.3",
-    "webpack": "^4.41.6",
-    "webpack-cli": "^3.3.11",
-    "webpack-dev-server": "^3.11.0"
+    "sass": "^1.22.10",
+    "css-loader": "^7.1.2",
+    "style-loader": "^1.1.3"
   }
 }

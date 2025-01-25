@@ -1,12 +1,15 @@
+@use './widgets.scss';
+@use './variables.scss';
+
 .game-menu{
-    color: $light-color;
+    color: variables.$light-color;
     display: flex;
     flex-direction: column;
     align-items: center;
-    font-family: $font;
+    font-family: variables.$font;
     &__options{
         button{
-            @include menu-button;
+            @include widgets.menu-button;
         }
     }
 }

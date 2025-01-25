@@ -1,9 +1,11 @@
+@use './variables.scss';
+
 .game{
     display: grid;
     grid-template-columns: 100px 1fr 100px;
     grid-template-rows: 100px calc(100vh - 100px);
-    color: $light-color;
-    font-family: $font;
+    color: variables.$light-color;
+    font-family: variables.$font;
 
     &__title{
         grid-column: 2;
@@ -19,9 +21,9 @@
         grid-column: 1;
         grid-row: 1;
         font-size: 2em;
-        background-color: $light-color;
+        background-color: variables.$light-color;
         border-style: solid;
-        border-color: $light-color;
+        border-color: variables.$light-color;
         border-width: 4px;
         display: flex;
         flex-direction: row;
@@ -30,7 +32,7 @@
         padding: 0px;
 
         span{
-            background-color: $dark-color;
+            background-color: variables.$dark-color;
             width: 10px;
             height: 50px;
             margin: 0px 10px;
@@ -38,10 +40,10 @@
         }
 
         &:hover{
-            background-color: $dark-color;
+            background-color: variables.$dark-color;
             cursor: pointer;
             span{
-                background-color: $light-color;
+                background-color: variables.$light-color;
             }
         }
     }
@@ -70,7 +72,7 @@
         grid-column: 2;
     }
 
-    @media only screen and (max-height: $mobile-break-point){
+    @media only screen and (max-height: variables.$mobile-break-point){
         grid-template-columns: 50px 1fr 50px;
         grid-template-rows: 50px calc(100vh - 50px);
         &__pause{
@@ -83,8 +85,8 @@
 }
 
 .box{
-    border: $light-color;
-    color: $light-color;
+    border: variables.$light-color;
+    color: variables.$light-color;
     font-size: 1.5em;
     border-width: 4px;
     border-style: solid;

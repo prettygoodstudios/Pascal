@@ -1,29 +1,32 @@
+@use './variables.scss';
+@use './widgets.scss';
+
 .prompt{
     position: fixed;
     bottom: 0;
     left: 0;
     margin: 0;
-    font-family: $font;
-    background-color: $light-color;
-    color: $dark-color;
+    font-family: variables.$font;
+    background-color: variables.$light-color;
+    color: variables.$dark-color;
     padding: 10px;
     border-radius: 4px;
     transform: translate(0, calc(-50% + 5px));
 
     a{
-        @include menu-button;
+        @include widgets.menu-button;
         font-size: 0.8em;
-        background-color: $dark-color;
-        color: $light-color;
+        background-color: variables.$dark-color;
+        color: variables.$light-color;
         display: inline-flex;
         width: auto;
         padding: 0px 40px;
         border-radius: 50px;
 
         &:hover{
-            background-color: $light-color;
-            color: $dark-color;
-            border-color: $dark-color;
+            background-color: variables.$light-color;
+            color: variables.$dark-color;
+            border-color: variables.$dark-color;
             cursor: pointer;
         }
 
@@ -46,7 +49,7 @@
                 width: 20px;
                 height: 4px;
                 border-radius: 2px;
-                background-color: $dark-color;
+                background-color: variables.$dark-color;
             }
 
             &:hover{

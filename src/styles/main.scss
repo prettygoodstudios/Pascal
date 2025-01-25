@@ -1,12 +1,13 @@
-@import "variables";
-@import "widgets";
-@import "home";
-@import "game";
-@import "game-menu";
-@import "help-screen";
-@import "prompt";
+@forward './game-menu.scss';
+@forward './home.scss';
+@forward './prompt.scss';
+@forward './help-screen.scss';
+@forward './game.scss';
+
+@use './variables.scss';
 
 html, body {
-    background-color: $dark-color;
+    background-color: variables.$dark-color;
     overflow: hidden;
 }
+

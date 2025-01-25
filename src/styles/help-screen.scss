@@ -1,9 +1,12 @@
+@use './widgets.scss';
+@use './variables.scss';
+
 .help-screen{
     display: flex;
     flex-direction: column;
     align-items: center;
-    font-family: $font;
-    color: $light-color;
+    font-family: variables.$font;
+    color: variables.$light-color;
 
     p{
         max-width: 500px;
@@ -31,6 +34,6 @@
     }
 
     button{
-        @include menu-button;
+        @include widgets.menu-button;
     }
 }
