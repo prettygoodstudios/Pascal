@@ -37,9 +37,17 @@ module.exports = {
       ]
   },
   devServer: {
-    static: {
-      directory: path.join(__dirname, '/'),
-    },
+    static: [
+      {
+        directory: path.join(__dirname, '/'),
+        publicPath: '/',
+      },
+      {
+        directory: path.join(__dirname, '/src/images'),
+        publicPath: '/src/images',
+        serveIndex: true,
+      }
+    ],
     compress: true,
     port: 9000,
   },

@@ -243,7 +243,7 @@ class Game extends Component {
         return(
             <div className="game" style={{display: gameState == PAUSE_GAME ? "none" : "grid"}}>
                 <div className="game__title">Pascal</div>
-                <button className="game__pause" onClick={() => pauseGame(points)}>
+                <button className="game__pause" onClick={() => pauseGame(points)} title="Pause">
                     <span></span>
                     <span></span>
                 </button>
