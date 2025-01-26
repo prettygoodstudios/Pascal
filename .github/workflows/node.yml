@@ -19,3 +19,23 @@ jobs:
           node-version: ${{ matrix.node }}
       - name: tests
         run: npm i && npm run test
+  deploy:
+      env:
+        CI_COMMIT_AUTHOR: ${{ github.event.repository.name }} Continuous Integration
+      runs-on: ubuntu-latest
+      strategy:
+        matrix:
+          node: [20]
+      steps:
+        - uses: actions/checkout@v3
+        - name: Commit Coverage Badge
+          if: github.event.pull_request.merged == true
+          run: |
+            git config --global user.name "${{ env.CI_COMMIT_AUTHOR }}"
+            git config --global user.email "username@users.noreply.github.com"
+            git checkout gh-pages
+            npm i
+            npm run build
+            git add dist
+            git commit -m "Deploying site"
+            git push --verbose origin gh-pages
