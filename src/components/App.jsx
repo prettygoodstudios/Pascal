@@ -19,8 +19,10 @@ class App extends Component{
         }
     }
 
-    componentDidMount(){
-        
+    async componentDidMount(){
+        try {
+            await screen.orientation.lock('landscape-primary');
+        } catch {}
     }
 
     startGame = () => {
