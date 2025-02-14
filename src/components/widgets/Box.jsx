@@ -23,12 +23,19 @@ class Box extends Component{
     }
 
     select = () => {
+        const { id, onDragStart } = this.props;
+        onDragStart(id);
         this.setState({
             selected: true
         });
     }
 
     unSelect = () => {
+        const { selected } = this.state;
+        const { id, x, y, onDrop } = this.props;
+        if (selected) {
+            onDrop({ x, y, width: 54, height: 54 }, id);
+        }
         this.setState({
             selected: false
         });
@@ -55,10 +62,16 @@ class Box extends Component{
     }
 
     render(){
-        const {x, y, id, visibleValue} = this.props;
-
+        const {x, y, id, visibleValue, isSlotted} = this.props;
+        const { selected } = this.state;
+        const getZIndex = () => {
+            if (isSlotted) {
+                return 0;
+            }
+            return selected ? 2 : 1;
+        }
         return(
-            <div className="box" id={"box"+id} style={{top: y+"px", left: x+"px", cursor: "pointer"}}>
+            <div className="box" id={"box"+id} style={{transform: `translate(${x}px, ${y}px)`, cursor: 'move', zIndex: getZIndex()}} draggable onDrag={e => e.preventDefault()} onDragStart={e => e.preventDefault()}>
                 {visibleValue}
             </div>
         )

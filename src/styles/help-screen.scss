@@ -15,7 +15,7 @@
 
     @media only screen and (max-height: 700px) and (min-height: 500px){
         p{
-            max-height: calc(100vh - 250px);
+            max-height: calc(100svh - 220px);
             overflow-y: scroll;
         }
     }
