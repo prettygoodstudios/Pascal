@@ -2,7 +2,7 @@
 
 .home-screen{
     display: grid;
-    grid-template-columns: 100px 1fr 100px;
+    grid-template-columns: min(100px, 0.1vw) 1fr min(100px, 0.1vw);
     grid-template-rows: 100px calc(100vh - 100px);
 
     &__title-section{
@@ -44,15 +44,18 @@
     }
 
     &__help-button{
-        grid-row: 1;
-        grid-column: 3;
         background-color: variables.$light-color;
         border-width: 4px;
         border-color: variables.$light-color;
         color: variables.$dark-color;
-        font-size: 2em;
+        font-size: 2rem;
         border-style: solid;
         padding: 0px;
+        position: fixed;
+        right: 20px;
+        top: 20px;
+        width: 75px;
+        height: 75px;
 
         &:hover{
             background-color: variables.$dark-color;
