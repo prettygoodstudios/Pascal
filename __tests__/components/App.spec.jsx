@@ -1,5 +1,5 @@
 import React from 'react';
-import { render } from "@testing-library/react";
+import { fireEvent, render } from "@testing-library/react";
 import userEvent from '@testing-library/user-event';
 
 import App from "../../src/components/App";
@@ -102,5 +102,34 @@ describe('<App />', () => {
 
         const points = await wrapper.findByText(/points/i);
         expect(points instanceof HTMLElement).toBe(true);        
+    });
+
+    test('clicking PWA link', async () => {
+        localStorage.clear();
+        const user = userEvent.setup({ delay: null });
+        const wrapper = render(<App />);
+        const prompt = jest.fn();
+        
+        await fireEvent(window, Object.assign(new Event('beforeinstallprompt'), {userChoice: Promise.resolve(), prompt}));
+
+        const downloadButton = await wrapper.findByRole('button', { name: /download/i });
+        await user.click(downloadButton);
+
+        expect(prompt).toHaveBeenCalledTimes(1);
+        expect(wrapper.queryByRole('button', { name: /download/i })).toBe(null);
+    });
+
+    test('dismissing pwa popup', async () => {
+        localStorage.clear();
+        const user = userEvent.setup({ delay: null });
+        const wrapper = render(<App />);
+        const prompt = jest.fn();
+        
+        await fireEvent(window, Object.assign(new Event('beforeinstallprompt'), {userChoice: Promise.resolve(), prompt}));
+
+        const dismissPrompt = await wrapper.findByRole('button', { name: /dismiss/i });
+        await user.click(dismissPrompt);
+
+        expect(wrapper.queryByRole('button', { name: /dismiss/i })).toBe(null);
     });
 });
