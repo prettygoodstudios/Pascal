@@ -74,4 +74,33 @@ describe('<App />', () => {
         const secondPlayButton = await wrapper.findByText(/play/i);
         expect(secondPlayButton instanceof HTMLButtonElement).toBe(true);
     });
+
+    test('Navigating to game screen and waiting until round is up', async () => {
+        const user = userEvent.setup({ delay: null });
+        const wrapper = render(<App />);
+
+        const playButton = await wrapper.findByRole('button', { name: /play/i });
+        await user.click(playButton);
+
+        jest.advanceTimersByTime(40_000);
+
+        await wrapper.findByRole('button', { name: /play again/i });
+        await wrapper.findByRole('button', { name: /main menu/i });
+    });
+
+    test('play again', async () => {
+        const user = userEvent.setup({ delay: null });
+        const wrapper = render(<App />);
+
+        const playButton = await wrapper.findByRole('button', { name: /play/i });
+        await user.click(playButton);
+
+        jest.advanceTimersByTime(40_000);
+
+        const playAgain = await wrapper.findByRole('button', { name: /play again/i });
+        await user.click(playAgain);
+
+        const points = await wrapper.findByText(/points/i);
+        expect(points instanceof HTMLElement).toBe(true);        
+    });
 });
