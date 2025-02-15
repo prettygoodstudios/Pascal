@@ -43,8 +43,9 @@ class Box extends Component{
 
     handleMouseMove = (e) => {
         const {id} = this.props;
+        const {selected} = this.state;
         const {clientX, clientY} = getPointerPosition(e);
-        if(this.state.selected){
+        if(selected){
             const arena = document.querySelector(".game__arena");
             const x = clientX - arena.offsetLeft - 25;
             const y = clientY - arena.offsetTop - 25;
@@ -71,7 +72,7 @@ class Box extends Component{
             return selected ? 2 : 1;
         }
         return(
-            <div className="box" id={"box"+id} style={{transform: `translate(${x}px, ${y}px)`, cursor: 'move', zIndex: getZIndex()}} draggable onDrag={e => e.preventDefault()} onDragStart={e => e.preventDefault()}>
+            <div className="box" id={"box"+id} style={{transform: `translate(${x}px, ${y}px)`, cursor: 'move', zIndex: getZIndex()}} draggable role="application" onDrag={e => e.preventDefault()} onDragStart={e => e.preventDefault()}>
                 {visibleValue}
             </div>
         )

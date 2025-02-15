@@ -5,6 +5,8 @@ import { PAUSE_GAME } from "../../constants/gameStates.js";
 import { generatePascalLayout } from "../../helpers/generatePascalLayout.js";
 import { shuffle } from "../../helpers/shuffle.js";
 import { areBoxesColliding } from "../../helpers/areBoxesColliding.js";
+import { getBoxLabel } from "../../helpers/getBoxLabel.js";
+import { generatePascalTriangle } from "../../helpers/generatePascalTriangle.js";
 
 class Game extends Component {
     
@@ -36,7 +38,7 @@ class Game extends Component {
         let topRow = Math.floor(Math.random()*8)+2;
         let tries = 0;
         
-        while(rounds.indexOf(topRow) != -1 && tries < 9){
+        while((rounds.indexOf(topRow) != -1 && tries < 9) || topRow === rounds[-1]){
             topRow = Math.floor(Math.random()*8)+2;
             tries++;
         }
@@ -44,8 +46,8 @@ class Game extends Component {
         rounds.push(topRow);
 
         const rows = [
-            this.generatePascalTriangle(topRow),
-            this.generatePascalTriangle(topRow+1)
+            generatePascalTriangle(topRow),
+            generatePascalTriangle(topRow + 1),
         ];
 
 
@@ -56,32 +58,16 @@ class Game extends Component {
         const boxes = slots.map((box) => ({...box, y: box.y + 200}));
 
         // Pick mystery boxes
-        const mysteryBoxes = [];
+        
         const flatRows = rows.flat();
-        mysteryBoxes.push(flatRows[Math.floor(Math.random()*flatRows.length)]);
-        mysteryBoxes.push(flatRows[Math.floor(Math.random()*flatRows.length)]);
-
-        while(mysteryBoxes[0] == mysteryBoxes[1]){
-            mysteryBoxes[1] = flatRows[Math.floor(Math.random()*flatRows.length)];
-        }
-
+        const mysteryBoxes = shuffle([...new Set(flatRows)]).slice(0, 2);
         mysteryBoxes.sort((a, b) => a-b);
 
 
         // Assign values
         shuffle(flatRows).forEach((boxValue, boxIndex) => {
             boxes[boxIndex].value = boxValue;
-            if (round <= 3 || !mysteryBoxes.includes(boxValue)) {
-                boxes[boxIndex].visibleValue = boxValue;
-            } else if (round <= 5 && boxValue === mysteryBoxes[0]) {
-                boxes[boxIndex].visibleValue = '?';
-            } else if (boxValue === mysteryBoxes[0]) {
-                boxes[boxIndex].visibleValue = 'a';
-            } else if (round > 5 && boxValue === mysteryBoxes[1]) {
-                boxes[boxIndex].visibleValue = 'b';
-            } else {
-                boxes[boxIndex].visibleValue = boxValue;
-            } 
+            boxes[boxIndex].visibleValue = getBoxLabel(boxValue, round, mysteryBoxes);
         });
 
         this.setState({
@@ -99,27 +85,14 @@ class Game extends Component {
     updateTime = () => {
         const {time, points} = this.state;
         if(this.props.gameState != PAUSE_GAME){
-            if(time-1 == 0){
+            if(time - 1 == 0){
                 this.props.endGame(points);
-            }else{
-                this.setState({
-                    time: time-1
-                });
+            } else {
+                this.setState((prevState) => ({
+                    time: prevState.time - 1
+                }));
             }
         }
-    }
-    
-    generatePascalTriangle(n){
-        if(n == 1){
-            return [1];
-        }
-        const topRow = this.generatePascalTriangle(n-1);
-        const newRow = [1];
-        for(let i = 0; i < topRow.length-1; i++){
-            newRow.push(topRow[i]+topRow[i+1]);
-        }
-        newRow.push(1);
-        return newRow;
     }
     
     componentWillUnmount(){
@@ -229,7 +202,7 @@ class Game extends Component {
                     </div>
                     <div style={{ display: 'flex', gap: '2rem'}}>
                         <p className="game__time">Time: {time}</p>
-                        <p className="game__score">Points: {points}</p>
+                        <p className="game__score">Points: {Intl.NumberFormat().format(points)}</p>
                     </div>
                 </div>
                 <div className="game__arena">
