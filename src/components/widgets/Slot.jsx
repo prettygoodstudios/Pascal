@@ -5,9 +5,9 @@ class Slot extends Component{
 
 
     render(){
-        const {x, y, id} = this.props;
+        const {x, y, id, size} = this.props;
         return(
-            <div className="box" id={"slot"+id} style={{transform: `translate(${x}px, ${y}px)`}} role="gridcell"></div>
+            <div className="box" id={"slot"+id} style={{transform: `translate(${x}px, ${y}px)`, '--size': size}} role="gridcell"></div>
         )
     }
 }

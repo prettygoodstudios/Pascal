@@ -7,12 +7,14 @@ import { shuffle } from "../../helpers/shuffle.js";
 import { areBoxesColliding } from "../../helpers/areBoxesColliding.js";
 import { getBoxLabel } from "../../helpers/getBoxLabel.js";
 import { generatePascalTriangle } from "../../helpers/generatePascalTriangle.js";
+import { AnimatedTypography } from "../widgets/AnimatedTypography.jsx";
 
 class Game extends Component {
     
     constructor(){
         super();
         this.state = {
+            oldPoints: 0,
             points: 0,
             answer: [[], []],
             boxes: [],
@@ -20,7 +22,8 @@ class Game extends Component {
             arena: null,
             time: 30,
             round: 0,
-            rounds: []
+            rounds: [],
+            boxSize: 50,
         }
     }
 
@@ -53,7 +56,7 @@ class Game extends Component {
 
         
 
-        const boxSize = 54;
+        const boxSize = window.innerWidth > 450 ? 54 : 30;
         const slots = generatePascalLayout(topRow-1, topRow, boxSize, arena.clientWidth);
         const boxes = slots.map((box) => ({...box, y: box.y + 200}));
 
@@ -75,7 +78,8 @@ class Game extends Component {
             boxes,
             slots,
             time: 30,
-            rounds
+            rounds,
+            boxSize
         });
 
         window.clearInterval(this.timer);
@@ -128,7 +132,8 @@ class Game extends Component {
         const {boxes, arena, time, points, round} = this.state;
         this.setState({
             points: points+boxes.length*50+time*50,
-            round: round+1
+            round: round+1,
+            oldPoints: points,
         });
         this.startChallenge(arena);
     }
@@ -187,11 +192,11 @@ class Game extends Component {
     }
     
     render(){
-        const {points, boxes, slots, time} = this.state;
+        const {points, boxes, slots, time, oldPoints, boxSize} = this.state;
         const {pauseGame, gameState} = this.props;
 
         return(
-            <div className="game" style={{display: gameState == PAUSE_GAME ? "none" : "grid"}}>
+            <div className="game" style={{display: gameState == PAUSE_GAME ? "none" : "flex"}}>
                 <div className="game__info">
                     <div style={{ display: 'flex', alignItems: 'center'}}>
                         <button className="game__pause" onClick={() => pauseGame(points)} title="Pause">
@@ -200,15 +205,22 @@ class Game extends Component {
                         </button>
                         <h1 className="game__title">Pascal</h1>
                     </div>
-                    <div style={{ display: 'flex', gap: '2rem'}}>
+                    <div className="game__stats">
                         <p className="game__time">Time: {time}</p>
-                        <p className="game__score">Points: {Intl.NumberFormat().format(points)}</p>
+                        <AnimatedTypography
+                            Component='p'
+                            className="game__score"
+                            from={oldPoints}
+                            to={points}
+                            format={(value) => `Points: ${Intl.NumberFormat().format(value | 0)}`}
+                            title={ `Points: ${Intl.NumberFormat().format(points)}`}
+                        />
                     </div>
                 </div>
                 <div className="game__arena">
                     {slots.map((s, i) => {
                         const {x, y} = s;
-                        return <Slot x={x} y={y} id={i} key={i} />
+                        return <Slot x={x} y={y} id={i} key={i} size={boxSize}/>
                     })}
                     {boxes.map((b, i) => {
                         const {x, y, value, visibleValue} = b;
@@ -222,6 +234,7 @@ class Game extends Component {
                                 key={i}
                                 visibleValue={visibleValue}
                                 onDrop={this.onDrop}
+                                size={boxSize}
                                 onDragStart={this.unSelectSlot}
                                 isSlotted={slots.map(s => s.boxId).includes(i)}
                             />

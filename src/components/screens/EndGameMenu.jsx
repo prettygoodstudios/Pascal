@@ -10,7 +10,7 @@ class EndGameMenu extends Component {
         return(
             <div className="game-menu">
                 <h1>Pascal</h1>
-                <p>You earned: {points} points!</p>
+                <p>You earned: {Intl.NumberFormat().format(points)} points!</p>
                 <div className="game-menu__options">
                     <button onClick={startGame}>Play Again</button>
                     <button onClick={goHome}>Main Menu</button>

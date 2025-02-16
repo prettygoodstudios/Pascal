@@ -63,7 +63,7 @@ class Box extends Component{
     }
 
     render(){
-        const {x, y, id, visibleValue, isSlotted} = this.props;
+        const {x, y, id, visibleValue, isSlotted, size} = this.props;
         const { selected } = this.state;
         const getZIndex = () => {
             if (isSlotted) {
@@ -72,7 +72,7 @@ class Box extends Component{
             return selected ? 2 : 1;
         }
         return(
-            <div className="box" id={"box"+id} style={{transform: `translate(${x}px, ${y}px)`, cursor: 'move', zIndex: getZIndex()}} draggable role="application" onDrag={e => e.preventDefault()} onDragStart={e => e.preventDefault()}>
+            <div className="box" id={"box"+id} style={{transform: `translate(${x}px, ${y}px)`, cursor: 'move', zIndex: getZIndex(), '--size': size, '--fontSize': size > 45 ? '1.5rem' : '1rem'}} draggable role="application" onDrag={e => e.preventDefault()} onDragStart={e => e.preventDefault()}>
                 {visibleValue}
             </div>
         )
