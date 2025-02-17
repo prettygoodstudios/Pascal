@@ -30,20 +30,6 @@ self.addEventListener('activate', (e) => {
     );
 });
 
-//self.addEventListener('fetch', (e) => {
-//    console.log("got the fetch")
-//    e.respondWith(
-//        caches.open(cacheName).then((cache) => {
-//            return cache.match(event.request).then((response) => {
-//                return response || fetch(event.request).then((response) => {
-//                    cache.put(event.request, response.clone());
-//                    return response;
-//                });
-//            });
-//        })
-//    );
-//});
-
 self.addEventListener('fetch', (event) => {
     event.respondWith(
         caches.match(event.request).then((response) => response || fetch(event.request))

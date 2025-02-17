@@ -1,7 +1,7 @@
 import React, { useEffect, useRef  } from 'react'; 
 
 
-export const AnimatedTypography = ({ from, to, Component, format, duration = 1000, ...props }) => {
+export const AnimatedTypography = ({ from, to, Component, format, duration = 1000, delay = 0, ...props }) => {
     const ref = useRef();
 
     useEffect(() => {
@@ -24,10 +24,16 @@ export const AnimatedTypography = ({ from, to, Component, format, duration = 100
             }
             animationFrame = requestAnimationFrame(animate);
         }
-
-        let animationFrame = requestAnimationFrame(animate);
-        return () => cancelAnimationFrame(animationFrame);
+        let animationFrame;
+        const timeOut = setTimeout(() => {
+            lastUpdated = Date.now();
+            animationFrame = requestAnimationFrame(animate);
+        }, delay);
+        return () => {
+            clearTimeout(timeOut);
+            cancelAnimationFrame(animationFrame);
+        };
     }, [from, to]);
 
-    return <Component ref={ref} {...props}>{format(from)}</Component>;
+    return <><Component {...props} ref={ref} role="presentation">{format(from)}</Component><Component role={props.role} style={{top: -1000, position: 'fixed'}}>{format(to)}</Component></>;
 }

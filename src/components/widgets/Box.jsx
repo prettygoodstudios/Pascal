@@ -42,13 +42,13 @@ class Box extends Component{
     }
 
     handleMouseMove = (e) => {
-        const {id} = this.props;
+        const {id, size} = this.props;
         const {selected} = this.state;
         const {clientX, clientY} = getPointerPosition(e);
         if(selected){
             const arena = document.querySelector(".game__arena");
-            const x = clientX - arena.offsetLeft - 25;
-            const y = clientY - arena.offsetTop - 25;
+            const x = clientX - arena.offsetLeft - size / 2;
+            const y = clientY - arena.offsetTop - size / 2;
             this.props.setPosition(id, x, y);
         }
     }

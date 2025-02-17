@@ -24,6 +24,8 @@ class Game extends Component {
             round: 0,
             rounds: [],
             boxSize: 50,
+            scoreUpdateAnimationDuration: 1_000,
+            scoreUpdateVisible: false,
         }
     }
 
@@ -100,6 +102,7 @@ class Game extends Component {
     }
     
     componentWillUnmount(){
+        window.clearTimeout(this.scoreUpdateTimeout);
         window.clearInterval(this.timer);
     }
 
@@ -129,12 +132,14 @@ class Game extends Component {
     }
     
     startNewRound = () => {
-        const {boxes, arena, time, points, round} = this.state;
+        const {boxes, arena, time, points, round, scoreUpdateAnimationDuration} = this.state;
         this.setState({
             points: points+boxes.length*50+time*50,
             round: round+1,
             oldPoints: points,
+            scoreUpdateVisible: true,
         });
+        this.scoreUpdateTimeout = setTimeout(() => this.setState({ scoreUpdateVisible: false }), scoreUpdateAnimationDuration);
         this.startChallenge(arena);
     }
 
@@ -173,7 +178,6 @@ class Game extends Component {
     }
 
     onDrop = (box, boxId) => {
-
         const euclideanDistance = (r1, r2) => {
             return Math.sqrt((r1.x - r2.x) ** 2 + (r1.y - r2.y) ** 2);
         }
@@ -192,7 +196,7 @@ class Game extends Component {
     }
     
     render(){
-        const {points, boxes, slots, time, oldPoints, boxSize} = this.state;
+        const {points, boxes, slots, time, oldPoints, boxSize, scoreUpdateVisible, scoreUpdateAnimationDuration} = this.state;
         const {pauseGame, gameState} = this.props;
 
         return(
@@ -206,17 +210,25 @@ class Game extends Component {
                         <h1 className="game__title">Pascal</h1>
                     </div>
                     <div className="game__stats">
-                        <p className="game__time">Time: {time}</p>
+                        <p className="game__time" role="timer">Time: {time}</p>
                         <AnimatedTypography
                             Component='p'
                             className="game__score"
                             from={oldPoints}
                             to={points}
                             format={(value) => `Points: ${Intl.NumberFormat().format(value | 0)}`}
-                            title={ `Points: ${Intl.NumberFormat().format(points)}`}
+                            role="status"
+                            delay={scoreUpdateAnimationDuration}
                         />
                     </div>
                 </div>
+                {scoreUpdateVisible && 
+                    <p
+                        className="game__scoreUpdate"
+                        style={{ '--animationDuration': `${scoreUpdateAnimationDuration}ms`}}
+                        role="presentation"
+                    >+{Intl.NumberFormat().format(points - oldPoints)}</p>
+                }
                 <div className="game__arena">
                     {slots.map((s, i) => {
                         const {x, y} = s;

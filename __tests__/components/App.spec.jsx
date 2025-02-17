@@ -51,7 +51,7 @@ describe('<App />', () => {
         const playButton = await wrapper.findByRole('button', { name: /play/i });
         await user.click(playButton);
 
-        const points = await wrapper.findByText(/points/i);
+        const points = await wrapper.findByRole('status', /points/i)
         expect(points instanceof HTMLElement).toBe(true);
     });
 
@@ -62,7 +62,7 @@ describe('<App />', () => {
         const playButton = await wrapper.findByRole('button', { name: /play/i });
         await user.click(playButton);
 
-        const points = await wrapper.findByText(/points/i);
+        const points = await wrapper.findByRole('status', /points/i);
         expect(points instanceof HTMLElement).toBe(true);
 
         const pauseButton = await wrapper.findByRole('button', { name: /pause/i });
@@ -100,7 +100,7 @@ describe('<App />', () => {
         const playAgain = await wrapper.findByRole('button', { name: /play again/i });
         await user.click(playAgain);
 
-        const points = await wrapper.findByText(/points/i);
+        const points = await wrapper.findByRole('status', /points/i);
         expect(points instanceof HTMLElement).toBe(true);        
     });
 

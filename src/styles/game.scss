@@ -1,7 +1,7 @@
 @use './variables.scss';
 
 .game {
-    --pause-button-size: 100px;
+    --pause-button-size: 75px;
     display: flex;
     flex-direction: column;
     color: variables.$light-color;
@@ -36,7 +36,7 @@
         width: var(--pause-button-size);
         height: var(--pause-button-size);
 
-        span{
+        span {
             background-color: variables.$dark-color;
             width: calc(var(--pause-button-size) * 0.1);
             height: calc(var(--pause-button-size) * 0.5);
@@ -61,9 +61,9 @@
     &__score{
         font-size: 1.5em;
         display: flex;
-        justify-content: center;
         align-items: center;
         margin: 0;
+        min-width: 200px;
     }
 
     &__time{
@@ -80,6 +80,18 @@
         width: 100%;
         position: relative;
         grid-area: arena;
+    }
+
+    &__scoreUpdate {
+        animation-duration: var(--animationDuration, 1s);
+        animation-name: scoreUpdateTransition;
+        animation-timing-function: ease-in;  
+        animation-fill-mode: forwards; 
+        position: absolute;
+        right: 1rem;
+
+        font-size: 1.5em;
+        pointer-events: none;
     }
 
     @media (max-height: variables.$mobile-break-point), (max-width: variables.$mobile-break-point){
@@ -104,7 +116,13 @@
 
         &__score {
             font-size: 1rem;
+            min-width: unset;
         }
+
+        &__scoreUpdate {
+            font-size: 1rem;
+        }
+
         &__stats {
             flex-direction: column;
             gap: 1rem;
@@ -113,7 +131,21 @@
     }
 }
 
-.box{
+@keyframes scoreUpdateTransition {
+    0% {
+        scale: 0;
+        opacity: 0;
+        top: 50%;
+    }
+
+    100% {
+        opacity: 1;
+        scale: 1;
+        top: 50px;
+    }
+} 
+
+.box {
     border: variables.$light-color;
     color: variables.$light-color;
     background-color: variables.$dark-color;
