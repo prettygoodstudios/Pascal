@@ -6,9 +6,11 @@ import { generatePascalTriangle } from '../../../src/helpers/generatePascalTrian
 
 describe('<Game />', () => {
 
+    const boxSize = 54;
+
     async function dragBox(box, position) {
         await fireEvent.mouseDown(box);
-        await fireEvent.mouseMove(box, { clientX: position[0] + 25, clientY: position[1] + 25});
+        await fireEvent.mouseMove(box, { clientX: position[0] + boxSize / 2, clientY: position[1] + boxSize / 2});
         await fireEvent.mouseUp(box);
     }
 
@@ -29,7 +31,7 @@ describe('<Game />', () => {
             const [box] = await wrapper.findAllByRole('application');
         
             await fireEvent.touchStart(box);
-            await fireEvent.touchMove(box, { touches: [{ clientX: 2000 + 25, clientY: 2000 + 25}] });
+            await fireEvent.touchMove(box, { touches: [{ clientX: 2000 + boxSize / 2, clientY: 2000 + boxSize / 2}] });
             await fireEvent.touchEnd(box);
             
             expect(box.style.transform).toBe('translate(2000px, 2000px)');
@@ -81,7 +83,8 @@ describe('<Game />', () => {
             await dragBox(box, [+slotPosition[0], +slotPosition[1]]);
         }
 
-        const points = (await wrapper.findByText(/points/i)).textContent.match(/[0-9]+/);
-        expect(points > 0).toBe(true);
+        const points = +(await wrapper.findByRole('status', /points/i)).textContent.match(/([0-9\,]+)/)[1].replace(',', '');
+
+        expect(points).toBeGreaterThan(0);
     });
 });
