@@ -5,8 +5,8 @@
     "background_color": "#373737",
     "display": "standalone",
     "orientation": "landscape",
-    "Scope": "/Pascal",
-    "start_url": "/Pascal",
+    "Scope": "/",
+    "start_url": "/",
     "icons": [
       {
         "src": "src/images/icons/icon-72x72.png",
