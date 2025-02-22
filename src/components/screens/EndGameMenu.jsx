@@ -1,4 +1,5 @@
 import React, {Component} from "react";
+import { AnimatedTypography } from "../widgets/AnimatedTypography.jsx";
 
 class EndGameMenu extends Component {
     constructor(props){
@@ -10,7 +11,14 @@ class EndGameMenu extends Component {
         return(
             <div className="game-menu">
                 <h1>Pascal</h1>
-                <p>You earned: {Intl.NumberFormat().format(points)} points!</p>
+                <AnimatedTypography
+                    Component='p'
+                    format={(value) => `You earned: ${Intl.NumberFormat().format(value|0)} points!`}
+                    delay={0}
+                    duration={1_000}
+                    from={0}
+                    to={points}
+                />
                 <div className="game-menu__options">
                     <button onClick={startGame}>Play Again</button>
                     <button onClick={goHome}>Main Menu</button>
