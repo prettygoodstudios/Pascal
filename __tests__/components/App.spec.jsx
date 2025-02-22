@@ -75,6 +75,27 @@ describe('<App />', () => {
         expect(secondPlayButton instanceof HTMLButtonElement).toBe(true);
     });
 
+    test('Navigating to pause page and back to game page', async () => {
+        const user = userEvent.setup({ delay: null });
+        const wrapper = render(<App />);
+
+        const playButton = await wrapper.findByRole('button', { name: /play/i });
+        await user.click(playButton);
+
+        const points = await wrapper.findByRole('status', /points/i);
+        expect(points instanceof HTMLElement).toBe(true);
+
+        const pauseButton = await wrapper.findByRole('button', { name: /pause/i });
+        await user.click(pauseButton, { clientX: 20, clientY: 20 });
+
+        jest.advanceTimersByTime(40_000);
+
+        const resumeButton = await wrapper.findByRole('button', { name: /resume/i });
+        await user.click(resumeButton);
+
+        await wrapper.findByText(/time.*30/i);
+    });
+
     test('Navigating to game screen and waiting until round is up', async () => {
         const user = userEvent.setup({ delay: null });
         const wrapper = render(<App />);

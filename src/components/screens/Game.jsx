@@ -4,10 +4,10 @@ import Slot from "../widgets/Slot.jsx";
 import { PAUSE_GAME } from "../../constants/gameStates.js";
 import { generatePascalLayout } from "../../helpers/generatePascalLayout.js";
 import { shuffle } from "../../helpers/shuffle.js";
-import { areBoxesColliding } from "../../helpers/areBoxesColliding.js";
 import { getBoxLabel } from "../../helpers/getBoxLabel.js";
 import { generatePascalTriangle } from "../../helpers/generatePascalTriangle.js";
 import { AnimatedTypography } from "../widgets/AnimatedTypography.jsx";
+import { getSlotToSnapTo } from "../../helpers/getSlotToSnapTo.js";
 
 class Game extends Component {
     
@@ -22,7 +22,7 @@ class Game extends Component {
             arena: null,
             time: 30,
             round: 0,
-            rounds: [],
+            rounds: this.generateRoundPoool(),
             boxSize: 50,
             scoreUpdateAnimationDuration: 1_000,
             scoreUpdateVisible: false,
@@ -37,33 +37,36 @@ class Game extends Component {
         this.startChallenge(arena);
     }
 
-    startChallenge = (arena) => {
-        const { round, rounds } = this.state;
+    generateRoundPoool = () => {
+        return shuffle(Array(7).fill(0).map((_, i) => i + 2));
+    }
 
-        let topRow = Math.floor(Math.random()*8)+2;
-        let tries = 0;
-        
-        while((rounds.indexOf(topRow) != -1 && tries < 9) || topRow === rounds[-1]){
-            topRow = Math.floor(Math.random()*8)+2;
-            tries++;
+    getRound = () => {
+        let { rounds } = this.state;
+
+        if (rounds.length === 0) {
+            rounds = this.generateRoundPoool();
+            this.setState({ rounds });
         }
-        
-        rounds.push(topRow);
+
+        return rounds.pop();
+    }
+
+    startChallenge = (arena) => {
+        const { round } = this.state;
+
+        const topRow = this.getRound();
 
         const rows = [
             generatePascalTriangle(topRow),
             generatePascalTriangle(topRow + 1),
         ];
 
-
-        
-
         const boxSize = window.innerWidth > 450 ? 54 : 30;
         const slots = generatePascalLayout(topRow-1, topRow, boxSize, arena.clientWidth);
         const boxes = slots.map((box) => ({...box, y: box.y + 200}));
 
         // Pick mystery boxes
-        
         const flatRows = rows.flat();
         const mysteryBoxes = shuffle([...new Set(flatRows)]).slice(0, 2);
         mysteryBoxes.sort((a, b) => a-b);
@@ -80,7 +83,6 @@ class Game extends Component {
             boxes,
             slots,
             time: 30,
-            rounds,
             boxSize
         });
 
@@ -90,7 +92,7 @@ class Game extends Component {
 
     updateTime = () => {
         const {time, points} = this.state;
-        if(this.props.gameState != PAUSE_GAME){
+        if(this.props.gameState !== PAUSE_GAME){
             if(time - 1 == 0){
                 this.props.endGame(points);
             } else {
@@ -143,11 +145,15 @@ class Game extends Component {
         this.startChallenge(arena);
     }
 
+    isSlotEmpty = (slot) => {
+        return slot?.value === -1 || !slot?.hasOwnProperty('value');
+    }
+
     snapBox = (boxId, slotId) => {
         const {boxes, slots, answer} = this.state;
         let box = boxes[boxId];
         const slot = slots[slotId];
-        if(slot.value == -1 || !slot.hasOwnProperty('value')){
+        if(this.isSlotEmpty(slot)){
             box = {
                 ...box,
                 x: slot.x,
@@ -162,8 +168,9 @@ class Game extends Component {
             const flattenedAnswer = [...answer[0], ...answer[1]];
             let correct = true;
             for(let i = 0; i < slots.length; i++){
-                if(slots[i].value != flattenedAnswer[i]){
+                if(slots[i].value !== flattenedAnswer[i]){
                     correct = false;
+                    break;
                 }
             }
             if(!correct){
@@ -178,21 +185,12 @@ class Game extends Component {
     }
 
     onDrop = (box, boxId) => {
-        const euclideanDistance = (r1, r2) => {
-            return Math.sqrt((r1.x - r2.x) ** 2 + (r1.y - r2.y) ** 2);
+        const { slots, boxSize } = this.state;
+        const { slotIndex } = getSlotToSnapTo(box, slots.map(s => ({...s, width: boxSize, height: boxSize })));
+
+        if (slotIndex !== null) {
+            this.snapBox(boxId, slotIndex);
         }
-
-        const collidingSlots = this.state.slots.map((s, i) => [s, i]).filter(([s]) => areBoxesColliding(box, { x: s.x, y: s.y, width: 54, height: 54 }));
-        
-        if (collidingSlots.length === 0) {
-            return;
-        }
-
-        collidingSlots.sort(([s1], [s2]) => euclideanDistance(s1, box) - euclideanDistance(s2, box));
-
-        const [[,selectedSlotId]] = collidingSlots;
-
-        this.snapBox(boxId, selectedSlotId);
     }
     
     render(){
@@ -202,7 +200,7 @@ class Game extends Component {
         return(
             <div className="game" style={{display: gameState == PAUSE_GAME ? "none" : "flex"}}>
                 <div className="game__info">
-                    <div style={{ display: 'flex', alignItems: 'center'}}>
+                    <div className="vertically-centered">
                         <button className="game__pause" onClick={() => pauseGame(points)} title="Pause">
                             <span></span>
                             <span></span>
