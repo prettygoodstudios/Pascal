@@ -1,5 +1,6 @@
 import React, { useCallback, useState } from "react";
 import { PascalTriangleAnimation } from "../widgets/PascalTriangleAnimation.jsx";
+import { PracticeRound } from "../widgets/PracticeRound.jsx";
 
 const stateMachine = {
     pascal: {
@@ -31,6 +32,12 @@ const stateMachine = {
     },
     reveal: {
         name: 'reveal',
+    },
+    try: {
+        name: 'try',
+    },
+    practice: {
+        name: 'practice'
     }
 }
 
@@ -52,6 +59,8 @@ export const Tutorial = () => {
 
     const onShowAgainFinish = useCallback(() => {
         setState(stateMachine.reveal.name);
+        setTimeout(() => setState(stateMachine.try.name), 2000);
+        setTimeout(() => setState(stateMachine.practice.name), 4000);
     }, []);
 
     return (
@@ -120,13 +129,21 @@ export const Tutorial = () => {
             </ShowOnState>
             <ShowOnState state={stateMachine.showAgain.name} selectedState={state}>
                 <div className="TutorialPascalTriangleAnimation">
-                    <PascalTriangleAnimation onFinish={onShowAgainFinish}/>
+                    {stateMachine.showAgain.name === state && <PascalTriangleAnimation onFinish={onShowAgainFinish}/>}
                 </div>
             </ShowOnState>
             <ShowOnState state={stateMachine.reveal.name} selectedState={state}>
                 <div className="Tutorial__explanation">
                    <p>Each element of the triangle is the sum of its two neighbor above</p>
                 </div>
+            </ShowOnState>
+            <ShowOnState state={stateMachine.try.name} selectedState={state}>
+                <div className="Tutorial__explanation">
+                   <p>Now give it a try</p>
+                </div>
+            </ShowOnState>
+            <ShowOnState state={stateMachine.practice.name} selectedState={state}>
+                <PracticeRound />
             </ShowOnState>
         </div>
     )

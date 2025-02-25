@@ -49,6 +49,7 @@ const TransitionBoxes = ({transitionBoxOne, transitionBoxTwo, numberOne, numberT
 export const PascalTriangleAnimation = ({ onFinish }) => {
     const [pointer, setPointer] = useState(-2);
     const [visiblePointer, setVisiblePointer] = useState(-2);
+    const [hasFinished, setHasFinished] = useState(false);
 
     useEffect(() => {
         let adjustPointerInterval;
@@ -64,7 +65,6 @@ export const PascalTriangleAnimation = ({ onFinish }) => {
                     } 
                     setVisiblePointer(newVisiblePointer);
                     if (!layout[oldPointer + 2] || layout[oldPointer + 2].y === maxY) {
-                        onFinish();
                         setPointer(layout.length)
                         clearInterval(adjustPointerInterval);
                         return oldPointer;
@@ -84,11 +84,19 @@ export const PascalTriangleAnimation = ({ onFinish }) => {
         };
     }, [onFinish]);
 
+    useEffect(() => {
+        if (!hasFinished && visiblePointer >= layout.length - 2) {
+            setHasFinished(true);
+            onFinish();
+        }
+    }, [visiblePointer]);
+    
+
     const transitionBoxOne = layout[pointer];
     const transitionBoxTwo = layout[pointer + 1];
 
     return (
-        <div style={{ width: '100vw', height: boxSize * 6, position: 'relative' }}>
+        <div className="PascalTriangleAnimation" style={{ height: boxSize * 6}}>
             {
                 layout.map(({x, y}, i) => (
                     <Fragment key={`${x},${y}`}>

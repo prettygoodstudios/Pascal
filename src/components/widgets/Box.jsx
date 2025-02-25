@@ -32,9 +32,9 @@ class Box extends Component{
 
     unSelect = () => {
         const { selected } = this.state;
-        const { id, x, y, onDrop } = this.props;
+        const { id, x, y, onDrop, size } = this.props;
         if (selected) {
-            onDrop({ x, y, width: 54, height: 54 }, id);
+            onDrop({ x, y, width: size, height: size }, id);
         }
         this.setState({
             selected: false
@@ -42,11 +42,11 @@ class Box extends Component{
     }
 
     handleMouseMove = (e) => {
-        const {id, size} = this.props;
+        const {id, size, arenaSelector = '.game__arean' } = this.props;
         const {selected} = this.state;
         const {clientX, clientY} = getPointerPosition(e);
         if(selected){
-            const arena = document.querySelector(".game__arena");
+            const arena = document.querySelector(arenaSelector);
             const x = clientX - arena.offsetLeft - size / 2;
             const y = clientY - arena.offsetTop - size / 2;
             this.props.setPosition(id, x, y);
