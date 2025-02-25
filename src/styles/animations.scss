@@ -1,0 +1,19 @@
+
+.fade {
+    transition: opacity calc(var(--duration, 1000) * 1ms) ease;
+}
+
+.fade-in {
+    opacity: 0;
+    animation: calc(var(--duration, 1000) * 1ms) ease calc(var(--delay, 0) * 1ms) fade-in forwards;
+}
+
+@keyframes fade-in {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}

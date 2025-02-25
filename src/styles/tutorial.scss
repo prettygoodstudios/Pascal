@@ -1,0 +1,112 @@
+@use './variables.scss';
+@use './widgets.scss';
+
+.Tutorial {
+
+    &__state {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+    }
+
+    &__number {
+        position: absolute;
+        width: calc(var(--size, 50) * 1px);
+        height: calc(var(--size, 50) * 1px);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 1.5em;
+        color: variables.$light-color;
+        font-family: variables.$font;
+        left: 0px;
+        top: 0px;
+    }
+
+    &__transitionBoxOne {
+        animation: calc(var(--duration, 1000) * 1ms) ease 0s mergeBoxOne forwards;
+    }
+
+    &__transitionBoxTwo {
+        animation: calc(var(--duration, 1000) * 1ms) ease 0s mergeBoxTwo;
+    }
+
+    &__addition {
+        left: calc(var(--size, 50) * 0.5px);
+        top: calc(var(--size, 50) * 1px);
+        font-size: 0.8em;
+    }
+
+    &__welcome {
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+        font-family: variables.$font;
+        color: variables.$light-color;
+        text-align: center;
+    }
+
+    &__skip {
+        position: absolute;
+        display: flex;
+        justify-content: center;
+        gap: 3rem;
+        top: 50%;
+        transform: translate(0, -50%);
+        width: 100vw;
+    }
+
+    &__explanation {
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+        font-family: variables.$font;
+        color: variables.$light-color;
+        text-align: center;
+
+        var {
+            white-space: nowrap;
+        }
+    }
+
+    &__examples {
+        display: grid;
+        grid-template-columns: 100px 1fr;
+
+        p {
+            width: 100%;
+            text-align: center;
+        }
+
+        span {
+            color: yellow;
+            font-weight: bold;
+            font-size: 1.2em;
+        }
+    }
+
+    &__button--primary {
+        @include widgets.menu-button;
+    }
+
+    &__button--secondary {
+        @include widgets.secondary-menu-button;
+    }
+
+    &PascalTriangleAnimation {
+        position: absolute;
+        top: 50%;
+        transform: translate(0, -50%);
+    }
+
+    @media screen and (max-width: variables.$mobile-break-point) {
+        &__skip {
+            flex-direction: column;
+            align-items: center;
+        }
+    }
+}

@@ -5,8 +5,9 @@ import Game from "./screens/Game.jsx";
 import EndGameMenu from "./screens/EndGameMenu.jsx";
 import PauseGameMenu from "./screens/PauseGameMenu.jsx";
 import HelpScreen from "./screens/HelpScreen.jsx";
+import { Tutorial } from './screens/Tutorial.jsx';
 
-import {HOME_STATE, GAME_STATE, END_GAME, PAUSE_GAME, HELP_SCREEN} from "../constants/gameStates";
+import {HOME_STATE, GAME_STATE, END_GAME, PAUSE_GAME, HELP_SCREEN, TUTORIAL} from "../constants/gameStates";
 
 class App extends Component{
 
@@ -73,11 +74,12 @@ class App extends Component{
         const {gameState, points} = this.state;
         return(
             <div>
-                {gameState == HOME_STATE && <Home startGame={this.startGame} openHelp={this.openHelp} lockScroll={this.lockScroll}/>}
-                {gameState == PAUSE_GAME && <PauseGameMenu startGame={this.startGame} goHome={this.goHome} points={points}/>}
-                {(gameState == GAME_STATE || gameState == PAUSE_GAME) && <Game endGame={this.endGame} gameState={gameState} pauseGame={this.pauseGame}/>}
-                {gameState == END_GAME && <EndGameMenu startGame={this.startGame} goHome={this.goHome} points={points}/>}
-                {gameState == HELP_SCREEN && <HelpScreen goHome={this.goHome} unlockScroll={this.unlockScroll}/>}
+                {<Tutorial/>}
+                {/* {gameState === HOME_STATE && <Home startGame={this.startGame} openHelp={this.openHelp} lockScroll={this.lockScroll}/>}
+                {gameState === PAUSE_GAME && <PauseGameMenu startGame={this.startGame} goHome={this.goHome} points={points}/>}
+                {(gameState === GAME_STATE || gameState == PAUSE_GAME) && <Game endGame={this.endGame} gameState={gameState} pauseGame={this.pauseGame}/>}
+                {gameState === END_GAME && <EndGameMenu startGame={this.startGame} goHome={this.goHome} points={points}/>}
+                {gameState === HELP_SCREEN && <HelpScreen goHome={this.goHome} unlockScroll={this.unlockScroll}/>} */}
             </div>
         )
     }
