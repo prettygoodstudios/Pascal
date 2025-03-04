@@ -46,28 +46,30 @@ const TransitionBoxes = ({transitionBoxOne, transitionBoxTwo, numberOne, numberT
     )
 }
 
+const getVisiblePointer = (pointer) => {
+    const foundVisible = layout.findIndex(({x, y}) => layout[pointer] &&  x === layout[pointer].x + boxSize / 2 && y === layout[pointer].y + boxSize) - 1;
+    if (foundVisible >= 0) {
+        return foundVisible;
+    }
+    if (pointer < 0) {
+        return -1;
+    }
+    return layout.length;
+}
+
 export const PascalTriangleAnimation = ({ onFinish }) => {
     const [pointer, setPointer] = useState(-2);
-    const [visiblePointer, setVisiblePointer] = useState(-2);
     const [hasFinished, setHasFinished] = useState(false);
 
     useEffect(() => {
         let adjustPointerInterval;
-
         const delayTimeout = setTimeout(() => {
             setPointer(1);
-            adjustPointerInterval = setInterval(() => {
-                
+            adjustPointerInterval = setInterval(() => { 
                 setPointer((oldPointer) => {
-                    let newVisiblePointer = layout.findIndex(({x, y}) => x === layout[oldPointer].x + boxSize / 2 && y === layout[oldPointer].y + boxSize)
-                    if (newVisiblePointer === -1) {
-                        newVisiblePointer = layout.length;
-                    } 
-                    setVisiblePointer(newVisiblePointer);
                     if (!layout[oldPointer + 2] || layout[oldPointer + 2].y === maxY) {
-                        setPointer(layout.length)
                         clearInterval(adjustPointerInterval);
-                        return oldPointer;
+                        return layout.length;
                     }
                     oldPointer++;
                     if (layout[oldPointer].y !== layout[oldPointer + 1].y) {
@@ -83,6 +85,8 @@ export const PascalTriangleAnimation = ({ onFinish }) => {
             clearTimeout(delayTimeout);
         };
     }, [onFinish]);
+
+    const visiblePointer = getVisiblePointer(pointer);
 
     useEffect(() => {
         if (!hasFinished && visiblePointer >= layout.length - 2) {

@@ -8,6 +8,21 @@
     animation: calc(var(--duration, 1000) * 1ms) ease calc(var(--delay, 0) * 1ms) fade-in forwards;
 }
 
+.fade-out {
+    opacity: 1;
+    animation: calc(var(--duration, 1000) * 1ms) ease calc(var(--delay, 0) * 1ms) fade-out forwards;
+}
+
+@keyframes fade-out {
+    from {
+        opacity: 1;
+    }
+
+    to {
+        opacity: 0;
+    }
+}
+
 @keyframes fade-in {
     from {
         opacity: 0;

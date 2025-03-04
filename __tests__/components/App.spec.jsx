@@ -1,5 +1,5 @@
 import React from 'react';
-import { fireEvent, render } from "@testing-library/react";
+import { fireEvent, render, act } from "@testing-library/react";
 import userEvent from '@testing-library/user-event';
 
 import App from "../../src/components/App";
@@ -35,7 +35,9 @@ describe('<App />', () => {
         const helpButton = await wrapper.findByRole('button', { name: /\?/i });
         await user.click(helpButton);
 
-        const goBackButton = await wrapper.findByRole('button', { name: /go home/i });
+        act(() => {jest.advanceTimersByTime(40_000)});
+
+        const goBackButton = await wrapper.findByRole('button', { name: /skip/i });
         expect(goBackButton instanceof HTMLButtonElement).toBe(true);
 
         await user.click(goBackButton);

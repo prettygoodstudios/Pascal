@@ -71,6 +71,10 @@
         var {
             white-space: nowrap;
         }
+
+        button {
+            margin-inline: auto;
+        }
     }
 
     &__examples {

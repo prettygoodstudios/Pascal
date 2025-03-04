@@ -76,7 +76,7 @@
 
     &__arena {
         margin-top: 1rem;
-        height: 400px;
+        height: 100vh;
         width: 100%;
         position: relative;
         grid-area: arena;
@@ -149,6 +149,7 @@
     border: variables.$light-color;
     color: variables.$light-color;
     background-color: variables.$dark-color;
+    font-family: variables.$font;
     font-size: var(--fontSize, 1.5rem);
     border-width: calc(1px * var(--size, 50) * 0.08);
     border-style: solid;

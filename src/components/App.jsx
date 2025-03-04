@@ -74,12 +74,11 @@ class App extends Component{
         const {gameState, points} = this.state;
         return(
             <div>
-                {<Tutorial/>}
-                {/* {gameState === HOME_STATE && <Home startGame={this.startGame} openHelp={this.openHelp} lockScroll={this.lockScroll}/>}
+                {gameState === HOME_STATE && <Home startGame={this.startGame} openHelp={this.openHelp} lockScroll={this.lockScroll}/>}
                 {gameState === PAUSE_GAME && <PauseGameMenu startGame={this.startGame} goHome={this.goHome} points={points}/>}
                 {(gameState === GAME_STATE || gameState == PAUSE_GAME) && <Game endGame={this.endGame} gameState={gameState} pauseGame={this.pauseGame}/>}
                 {gameState === END_GAME && <EndGameMenu startGame={this.startGame} goHome={this.goHome} points={points}/>}
-                {gameState === HELP_SCREEN && <HelpScreen goHome={this.goHome} unlockScroll={this.unlockScroll}/>} */}
+                {gameState === HELP_SCREEN && <Tutorial onPlay={this.startGame} onSkip={this.goHome} />}
             </div>
         )
     }
