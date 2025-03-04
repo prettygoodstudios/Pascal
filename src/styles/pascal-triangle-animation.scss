@@ -1,0 +1,64 @@
+@use './variables.scss';
+
+.PascalTriangleAnimation {
+    width: 100vw;
+    position: relative;
+
+    &__number {
+        position: absolute;
+        width: calc(var(--size, 50) * 1px);
+        height: calc(var(--size, 50) * 1px);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 1.5em;
+        color: variables.$light-color;
+        font-family: variables.$font;
+        left: 0px;
+        top: 0px;
+    }
+
+    &__transitionBoxOne {
+        animation: calc(var(--duration, 1000) * 1ms) ease 0s mergeBoxOne forwards;
+    }
+
+    &__transitionBoxTwo {
+        animation: calc(var(--duration, 1000) * 1ms) ease 0s mergeBoxTwo;
+    }
+
+    &__addition {
+        left: calc(var(--size, 50) * 0.5px);
+        top: calc(var(--size, 50) * 1px);
+        font-size: 0.8em;
+    }
+
+}
+
+@keyframes mergeBoxOne {
+    from {
+        left: 0;
+        top: 0;
+        opacity: 1;
+    }
+
+    to {
+        left: calc(var(--size, 50) * 0.5px);
+        top: calc(var(--size, 50) * 1px);
+        opacity: 0;
+        
+    }
+}
+
+@keyframes mergeBoxTwo {
+    from {
+        left: 0;
+        top: 0;
+        opacity: 1;
+    }
+
+    to {
+        left: calc(var(--size, 50) * -0.5px);
+        top: calc(var(--size, 50) * 1px);
+        opacity: 0;
+    }
+}

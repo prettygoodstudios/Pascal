@@ -6,7 +6,7 @@ import { getBoxXPosition } from "./getBoxXPosition";
  * @param {number} endRow 
  * @param {number} boxSize 
  * @param {number} arenaWidth
- * @returns {{ x: number, y: number }}
+ * @returns {Point[]}
  */
 export function generatePascalLayout(
     startRow,

@@ -1,0 +1,27 @@
+
+.PracticeRound {
+    margin-top: 100px;
+    width: 100vw;
+    position: relative;
+
+    &__dragHand {
+        z-index: 3;
+        position: relative;
+        animation: 1.5s ease 0s handDrag infinite;
+        transition: opacity 1s ease;
+    }
+}
+
+@keyframes handDrag {
+    from {
+        
+        left: calc(var(--startX) * 1px);
+        top: calc(var(--startY) * 1px);
+    }
+
+    to {
+        position: relative;
+        left: calc(var(--endX) * 1px);
+        top: calc(var(--endY) * 1px);
+    }
+}
