@@ -33,7 +33,7 @@ export const AnimatedTypography = ({ from, to, Component, format, duration = 100
             clearTimeout(timeOut);
             cancelAnimationFrame(animationFrame);
         };
-    }, [from, to]);
+    }, [from, to, delay, duration, format]);
 
     return <><Component {...props} ref={ref} role="presentation">{format(from)}</Component><Component role={props.role} style={{top: -1000, position: 'fixed'}}>{format(to)}</Component></>;
 }

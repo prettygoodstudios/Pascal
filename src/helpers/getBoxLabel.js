@@ -10,14 +10,14 @@
 /**
  * @type {GetLabel}
  */
-function getLabelForEarlyRounds(boxValue, round, mysteryBoxes) {
+function getLabelForEarlyRounds(boxValue) {
     return boxValue
 }
 
 /**
  * @type {GetLabel}
  */
-function getLabelForMidRounds(boxValue, round, mysteryBoxes) {
+function getLabelForMidRounds(boxValue, _, mysteryBoxes) {
     if (boxValue === mysteryBoxes?.[0]) {
         return '?';
     }
@@ -27,7 +27,7 @@ function getLabelForMidRounds(boxValue, round, mysteryBoxes) {
 /**
  * @type {GetLabel}
  */
-function getLabelForLateRounds(boxValue, round, mysteryBoxes) {
+function getLabelForLateRounds(boxValue, _, mysteryBoxes) {
     if (boxValue === mysteryBoxes?.[0]) {
         return 'a';
     }

@@ -148,7 +148,7 @@ class Game extends Component {
     }
 
     isSlotEmpty = (slot) => {
-        return slot?.value === -1 || !slot?.hasOwnProperty('value');
+        return slot?.value === -1 || !('value' in slot);
     }
 
     snapBox = (boxId, slotId) => {
@@ -194,6 +194,8 @@ class Game extends Component {
             this.snapBox(boxId, slotIndex);
         }
     }
+
+    formatPoints = (value) => `Points: ${Intl.NumberFormat().format(value | 0)}`
     
     render(){
         const {points, boxes, slots, time, oldPoints, boxSize, scoreUpdateVisible, scoreUpdateAnimationDuration} = this.state;
@@ -216,7 +218,7 @@ class Game extends Component {
                             className="game__score"
                             from={oldPoints}
                             to={points}
-                            format={(value) => `Points: ${Intl.NumberFormat().format(value | 0)}`}
+                            format={this.formatPoints}
                             role="status"
                             delay={scoreUpdateAnimationDuration}
                         />
