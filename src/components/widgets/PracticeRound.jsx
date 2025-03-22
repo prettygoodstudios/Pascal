@@ -15,7 +15,8 @@ const triangle = [
 const shuffled = shuffle(triangle);
 const boxSize = 50;
 const layout = generatePascalLayout(2, 3, boxSize, window.innerWidth);
-const initialBoxes = layout.map(({x, y}, i) => ({id: i, x, y: y + 200, value: shuffled[i] }));
+const distance = window.innerHeight > 450 ? 200 : 150; 
+const initialBoxes = layout.map(({x, y}, i) => ({id: i, x, y: y + distance, value: shuffled[i] }));
 const initialAnswer = triangle.map(() => null);
 
 const states = {
@@ -64,10 +65,10 @@ export const PracticeRound = ({ onFinish }) => {
                             const newAnswer = answer.map((old, i) => i === slotIndex && old === null ? id : old);
                             if (JSON.stringify(newAnswer.map(id => boxes[id]?.value)) === JSON.stringify(triangle)) {
                                 onFinish();
-                            } else if (newAnswer.filter(v => v === null).length > 0) {
-                                const newTarget = newAnswer.indexOf(null);
+                            } else {
+                                const newTarget = newAnswer.findIndex((a, i) => boxes[a]?.value !== triangle[i]);
                                 const hintAnswer = triangle[newTarget];
-                                const boxIndex = boxes.findIndex(b => b.value === hintAnswer && !newAnswer.includes(b.id));
+                                const boxIndex = boxes.findIndex(b => b.value === hintAnswer && triangle[newAnswer.indexOf(b.id)] !== b.value);
                                 if (boxIndex >= 0) {
                                     setTarget({...layout[newTarget]})
                                     setHint({...boxes[boxIndex]});
@@ -79,6 +80,7 @@ export const PracticeRound = ({ onFinish }) => {
 
                         }}
                         arenaSelector='.PracticeRound'
+                        isSlotted={answer.includes(id)}
                     />
                 ))
             }
@@ -88,7 +90,7 @@ export const PracticeRound = ({ onFinish }) => {
                 height="50px"
                 preserveAspectRatio="xMinYMin"
                 className="PracticeRound__dragHand"
-                style={{ '--startX': hint.x + boxSize / 2, '--startY': hint.y + boxSize / 2, '--endX': target.x + boxSize / 2, '--endY': target.y + boxSize / 2, opacity: state === states.intro ? 1 : 0, pointerEvents: 'none' }}
+                style={{ '--startX': hint.x + boxSize / 2, '--startY': hint.y + boxSize / 2, '--endX': target.x + boxSize / 2, '--endY': target.y + boxSize / 2, opacity: state === states.intro ? 1 : 0 }}
             />
         </div>
     )

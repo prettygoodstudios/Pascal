@@ -62,9 +62,11 @@ class Game extends Component {
             generatePascalTriangle(topRow + 1),
         ];
 
-        const boxSize = window.innerWidth > 450 ? 54 : 30;
+        const standardBoxSize = 54;
+        const boxSize = window.innerWidth > 450 ? standardBoxSize : Math.min((window.innerWidth - 40) / (topRow + 1), standardBoxSize);
         const slots = generatePascalLayout(topRow-1, topRow, boxSize, arena.clientWidth);
-        const boxes = slots.map((box) => ({...box, y: box.y + 200}));
+        const distance = window.innerHeight > 450 ? 200 : 150; 
+        const boxes = slots.map((box) => ({...box, y: box.y + distance}));
 
         // Pick mystery boxes
         const flatRows = rows.flat();
