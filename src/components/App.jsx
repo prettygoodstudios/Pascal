@@ -4,7 +4,6 @@ import Home from "./screens/Home.jsx";
 import Game from "./screens/Game.jsx";
 import EndGameMenu from "./screens/EndGameMenu.jsx";
 import PauseGameMenu from "./screens/PauseGameMenu.jsx";
-import HelpScreen from "./screens/HelpScreen.jsx";
 import { Tutorial } from './screens/Tutorial.jsx';
 
 import {HOME_STATE, GAME_STATE, END_GAME, PAUSE_GAME, HELP_SCREEN, TUTORIAL} from "../constants/gameStates";

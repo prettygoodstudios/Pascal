@@ -9,6 +9,8 @@
         position: relative;
         animation: 1.5s ease 0s handDrag infinite;
         transition: opacity 1s ease;
+        transform: translateX(-50%);
+        pointer-events: none;
     }
 }
 
