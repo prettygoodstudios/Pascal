@@ -6,7 +6,7 @@ import EndGameMenu from "./screens/EndGameMenu.jsx";
 import PauseGameMenu from "./screens/PauseGameMenu.jsx";
 import { Tutorial } from './screens/Tutorial.jsx';
 
-import {HOME_STATE, GAME_STATE, END_GAME, PAUSE_GAME, HELP_SCREEN, TUTORIAL} from "../constants/gameStates";
+import {HOME_STATE, GAME_STATE, END_GAME, PAUSE_GAME, HELP_SCREEN} from "../constants/gameStates";
 
 class App extends Component{
 
@@ -17,12 +17,6 @@ class App extends Component{
             gameState: HOME_STATE,
             points: 0
         }
-    }
-
-    async componentDidMount(){
-        try {
-            await screen.orientation.lock('landscape-primary');
-        } catch {}
     }
 
     startGame = () => {

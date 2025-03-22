@@ -19,3 +19,15 @@ jobs:
           node-version: ${{ matrix.node }}
       - name: tests
         run: npm i && npm run test
+  lint:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node: [20]
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node }}
+      - name: lint
+        run: npm i && npm run lint

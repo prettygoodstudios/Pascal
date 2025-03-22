@@ -6,6 +6,8 @@ class EndGameMenu extends Component {
         super(props);
     }
 
+    formatPoints = (value) => `You earned: ${Intl.NumberFormat().format(value|0)} points!`
+
     render(){
         const {points, startGame, goHome} = this.props;
         return(
@@ -13,7 +15,7 @@ class EndGameMenu extends Component {
                 <h1>Pascal</h1>
                 <AnimatedTypography
                     Component='p'
-                    format={(value) => `You earned: ${Intl.NumberFormat().format(value|0)} points!`}
+                    format={this.formatPoints}
                     delay={0}
                     duration={1_000}
                     from={0}

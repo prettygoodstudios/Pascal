@@ -125,12 +125,12 @@ export const Tutorial = ({onPlay, onSkip}) => {
             </ShowOnState>
             <ShowOnState state={stateMachine.pain.name} selectedState={state}>
                 <div className="Tutorial__explanation">
-                   <p>It can be a real pain, if you don't know the trick</p>
+                   <p>It can be a real pain, if you don&apos;t know the trick</p>
                 </div>
             </ShowOnState>
             <ShowOnState state={stateMachine.examples.name} selectedState={state}>
                 <div className="Tutorial__explanation">
-                   <p>Let's look at some similar examples</p>
+                   <p>Let&apos;s look at some similar examples</p>
                    <div className="Tutorial__examples">
                     <p><var>(x + y)<sup>0</sup>=</var></p><p><var><span>1</span></var></p>
                     <p><var>(x + y)<sup>1</sup>=</var></p><p><var><span>1</span>x+<span>1</span>y</var></p>
@@ -156,7 +156,7 @@ export const Tutorial = ({onPlay, onSkip}) => {
             </ShowOnState>
             <ShowOnState state={stateMachine.pattern.name} selectedState={state}>
                 <div className="Tutorial__explanation">
-                   <p>Let's show the triangle again, and see if you can spot the pattern?</p>
+                   <p>Let&apos;s show the triangle again, and see if you can spot the pattern?</p>
                 </div>
             </ShowOnState>
             <ShowOnState state={stateMachine.showAgain.name} selectedState={state}>

@@ -36,7 +36,7 @@ export default class PWAPrompt extends Component {
 
     download = () => {
         this.state.deferredPrompt.prompt(); 
-        this.state.deferredPrompt.userChoice.then((choiceResult) => {
+        this.state.deferredPrompt.userChoice.then(() => {
             localStorage.setItem("promptActivated", "true");
         });
         this.setState({

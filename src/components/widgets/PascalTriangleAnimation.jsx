@@ -84,7 +84,7 @@ export const PascalTriangleAnimation = ({ onFinish }) => {
             clearInterval(adjustPointerInterval);
             clearTimeout(delayTimeout);
         };
-    }, [onFinish]);
+    }, []);
 
     const visiblePointer = getVisiblePointer(pointer);
 
@@ -93,7 +93,7 @@ export const PascalTriangleAnimation = ({ onFinish }) => {
             setHasFinished(true);
             onFinish();
         }
-    }, [visiblePointer]);
+    }, [visiblePointer, onFinish, hasFinished]);
     
 
     const transitionBoxOne = layout[pointer];
